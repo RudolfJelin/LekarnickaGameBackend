@@ -1,14 +1,32 @@
-﻿const { createServer } = require('node:http');
+﻿/*TUTORIAL CONTENT*/
 
-const hostname = '127.0.0.1';
-const port = 3000;
+const express = require('express')
+const app = express()
+const http = require('http').createServer(app)
+const io = require('socket.io')(http)
+const events = require('events')
+const timeUpEvent = new events.EventEmitter()
 
-const server = createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello World');
-});
+const questions = [{
+    text: "Hello! What time of the day is it right now?",
+    time: 10, // In seconds
+    answers: [
+        "Morning",
+        "Afternoon",
+        "Evening",
+        "Night"
+    ],
+    correctAnswer: "Afternoon"
+}, ]
 
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+
+io.on('connection', (socket) => {
+    console.log("A user connected!")
+    socket.emit('connected')
+})
+
+app.use(express.static('public'))
+
+http.listen(3000, () => {
+    console.log('listening on *:3000')
+})
