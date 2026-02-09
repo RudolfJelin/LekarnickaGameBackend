@@ -1,116 +1,54 @@
-﻿/*TUTORIAL CONTENT*/
+﻿// init
 
-const express = require('express')
-const app = express()
-const http = require('http').createServer(app)
-const io = (require('socket.io'))(http)
+const express = require('express');
+const { createServer } = require('node:http');
+const { join } = require('node:path');
+const { Server } = require('socket.io');
 
-const events = require('events')
-const timeUpEvent = new events.EventEmitter()
+const app = express();
+const server = createServer(app);
+const io = new Server(server);
 
-const questions = [{
-    text: "Hello! What time of the day is it right now?",
-    time: 10, // In seconds
-    answers: [
-        "Morning",
-        "Afternoon",
-        "Evening",
-        "Night"
-    ],
-    correctAnswer: "Afternoon"
-},{
-    text: "Hello! What time of the day is it right now? 2",
-    time: 10, // In seconds
-    answers: [
-        "Morning",
-        "Afternoon",
-        "Evening",
-        "Night"
-    ],
-    correctAnswer: "Evening"
-}, ]
+// state
+const game_none = "game_none";
+const game_in_lobby = "game_in_lobby";
+const game_ingame = "game_ingame";
+const game_eval = "game_eval";
+const game_post = "game_post";
+const default_game_len_seconds = "10";
 
-let userPointsMap = {
-    /*
-    The keys will be the socket IDs, and the values will be arrays.
-    The first element of the array will be the Player's name,
-    and the second will be the amount of points they currently have.
-
-    <SOCKETID>: ["<PLAYERNAME>", <POINTS>]
-
-    Example:
-
-    dfwaogruhdslfsdljf: ["Khushraj", 0]
-    */
+let state = {
+    "phase": game_none,
+    "timer": -1
 }
 
 
+// connection code
+
+// this code runs for each socket(host user or player user) separately
 io.on('connection', (socket) => {
-    let attempt = ""
+    console.log('a user connected');
 
-    console.log("A user connected!")
-    socket.emit('connected')
+    // send an "e_connected" message to the user that connected
+    socket.emit('e_connected', socket.id);
 
-    socket.once("name", (name) => {
-        userPointsMap[socket.id] = [name, 0]
-        io.emit("name", name)
-    })
+    // log a disconnection of the user
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
 
-    socket.once("start", async () => {
-        for (const question of questions) {
-            await new Promise(async (resolve) => {
-                const toSend = {
-                    ...question
-                } // Duplicate the question
-
-                setTimeout(() => {
-                    timeUpEvent.emit("timeUp", question.correctAnswer)
-                    const sortedValues = Object.values(userPointsMap).sort(([, a], [, b]) => b - a)
-                    const top5 = sortedValues.slice(0, 5)
-
-                    io.emit("timeUp", top5)
-
-                    socket.once("next", () => {
-                        resolve()
-                    })
-                }, question.time * 1000)
-
-                delete toSend.correctAnswer
-                io.emit('question', toSend)
-            })
-        }
-
-        const sortedValues = Object.values(userPointsMap).sort(([, a], [, b]) => b - a)
-        io.emit("gameover", sortedValues)
-        process.exit(0)
-    })
-
-    socket.on("answer", answer => {
-        attempt = answer
-    })
-
-    timeUpEvent.on("timeUp", (correctAnswer) => {
-        if (attempt) {
-            if (attempt === correctAnswer) {
-                userPointsMap[socket.id][1]++
-                socket.emit("correct")
-            } else {
-                socket.emit("incorrect")
-            }
-            attempt = ""
-        } else {
-            socket.emit("noAnswer")
-        }
-    })
-})
+    socket.on('e_update', () => {
+       // a client requested a state update
+    });
+});
 
 
+app.use(express.static('public'));
+
+server.listen(3000, () => {
+    console.log('server running at http://localhost:3000');
+});
 
 
-app.use(express.static('public'))
-
-http.listen(3000, () => {
-    console.log('listening on *:3000')
-})
 
 
