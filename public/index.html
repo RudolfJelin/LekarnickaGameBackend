@@ -2,33 +2,41 @@
 <html lang="en">
 
 <head>
-    <title> LékárničkaGame </title>
+    <title> HOME | LékárničkaGame </title>
     <link rel="stylesheet" href="styles.css">
+
 </head>
 
 <body>
 
 <h1> Lékárnička Game (Beta Test) </h1>
 
-<p id="status">
-    Loading status...
-</p>
+<p id="status_sentence">Načítám...</p>
 
-<div id="container">
+<button id="asPlayer" onclick="playAsPlayer()" disabled >Hrát</button>
+<button id="asHost" onclick="playAsHost()" disabled>Založit novou hru</button>
+
+
+<div id="debug" style="display: none">
 <!-- TODO conditional links to host, play game or administrate site -->
-    <p>Testing links:</p>
+    <p>Debug info:</p>
     <a href="/">Home</a> <br>
     <a href="/admin">Admin</a> <br>
     <a href="/host">Host game</a> <br>
     <a href="/play">Play game</a> <br>
+
+    <p id="state">
+        Loading state...
+    </p>
 
     <p id="log">Log: <br></p>
 </div>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.socket.io/4.8.3/socket.io.min.js"></script>
+<script src="/common.js"></script>
 <script src="index.js"></script>
-</body>
 
+</body>
 </html>
 

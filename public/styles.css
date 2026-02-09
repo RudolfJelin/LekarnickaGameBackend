@@ -2,3 +2,7 @@
 body {
     font-family: "Open Sans", sans-serif;
 }
+
+.debug{
+    white-space: break-spaces;
+}

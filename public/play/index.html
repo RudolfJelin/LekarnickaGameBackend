@@ -2,29 +2,76 @@
 <html lang="en">
 
 <head>
-    <title> LékárničkaGame </title>
-    <link rel="stylesheet" href="styles.css">
+    <title> PLAY | LékárničkaGame </title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
 
-<h1> Lékárnička Game: hráč </h1>
+<h1> Lékárnička Game: hrát </h1>
+<p id="my_name">načítám jméno...</p>
 
-<p id="status">
-    Loading status...
-</p>
+<div id="before_game">
+    <p id="before_game_p">Žádná hra není. Počkej zde a možná se dočkáš?</p>
+</div>
 
-<div id="container">
+<div id="lobby">
+    <p id="lobby_p">Čeká se na start...</p>
+
+    <ul id="lobby_list">
+<!--        list of players      -->
+    </ul>
+
+    <form>
+        <button id="lobby_quit" type="submit" formaction="/">Odejít</button>
+    </form>
+</div>
+
+<div id="game">
+    <p id="game_p">Jsi ve hře. TODO</p>
+</div>
+
+<div id="evaluation">
+    <p id="eval_p">Čas skončil!</p>
+    <p>(zatím nic?)</p>
+</div>
+
+<div id="after_game">
+    <p id="after_game_p">Takhle jsi dopadl...</p>
+    <form>
+        <button id="feedback_form_b" type="submit" formaction="/">Dát zpětnou vazbu</button>
+    </form>
+
+    <form>
+        <button id="save_results_b" type="submit" formaction="/">Uložit výsledky</button>
+    </form>
+
+    <form>
+        <button id="go_back_b" type="submit" formaction="/">Opustit hru</button>
+    </form>
+
+</div>
+
+
+<div id="debug" style="display: none">
     <!-- TODO conditional links to host, play game or administrate site -->
-    <p>Testing links:</p>
+    <p>Debug info:</p>
     <a href="/">Home</a> <br>
     <a href="/admin">Admin</a> <br>
     <a href="/host">Host game</a> <br>
     <a href="/play">Play game</a> <br>
+
+    <p id="state">
+        Loading state...
+    </p>
+
+    <p id="log">Log: <br></p>
 </div>
+
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.socket.io/4.8.3/socket.io.min.js"></script>
+<script src="/common.js"></script>
 <script src="index.js"></script>
 </body>
 
