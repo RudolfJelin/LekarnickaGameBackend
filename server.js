@@ -89,6 +89,22 @@ io.on('connection', (socket) => {
         // then update if changed
         update_state_for_all();
     });
+
+    socket.on('e_host_wants_new_game', () => {
+        // host has requested to start a new game
+
+        if (state.phase !== game_none){
+            console.error("Host requested new game, but there already is a game.")
+            return;
+        }
+
+        // update state and let everyone know
+        state.phase = game_in_lobby;
+        update_state_for_all();
+
+    })
+
+
 });
 
 

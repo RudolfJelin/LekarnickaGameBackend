@@ -5,17 +5,38 @@
     <title> ADMIN | LékárničkaGame </title>
     <link rel="stylesheet" href="/styles.css">
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdn.socket.io/4.8.3/socket.io.min.js"></script>
-    <script src="/common.js"></script>
 </head>
 
 <body>
 
-<h1> Lékárnička Game: administrace </h1>
+<h1> Lékárnička Game: admin </h1>
+
+<!-- content according to drawings -->
+
+<div id="game_none" style="display: none">
+
+</div>
+
+<div id="game_in_lobby" style="display: none">
+
+</div>
+
+<div id="game_ingame" style="display: none">
+
+</div>
+
+<div id="game_eval" style="display: none">
+
+</div>
+
+<div id="game_post" style="display: none">
+
+</div>
 
 
-<div id="debug">
+
+
+<div id="debug" style="display: none">
     <!-- TODO conditional links to host, play game or administrate site -->
     <p>Debug info:</p>
     <a href="/">Home</a> <br>
@@ -30,6 +51,9 @@
     <p id="log">Log: <br></p>
 </div>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.socket.io/4.8.3/socket.io.min.js"></script>
+<script src="/common.js"></script>
 <script src="index.js"></script>
 </body>
 

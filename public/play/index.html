@@ -11,12 +11,12 @@
 <h1> Lékárnička Game: hrát </h1>
 <p id="my_name">načítám jméno...</p>
 
-<div id="before_game">
-    <p id="before_game_p">Žádná hra není. Počkej zde a možná se dočkáš?</p>
+<div id="game_none" style="display: none">
+    <p id="game_none_p">Žádná hra není. Počkej zde a možná se dočkáš?</p>
 </div>
 
-<div id="lobby">
-    <p id="lobby_p">Čeká se na start...</p>
+<div id="game_in_lobby" style="display: none">
+    <p id="game_in_lobby_p">Čeká se na start...</p>
 
     <ul id="lobby_list">
 <!--        list of players      -->
@@ -27,23 +27,23 @@
     </form>
 </div>
 
-<div id="game">
+<div id="game_ingame" style="display: none">
     <p id="game_p">Jsi ve hře. TODO</p>
 </div>
 
-<div id="evaluation">
+<div id="game_eval" style="display: none">
     <p id="eval_p">Čas skončil!</p>
     <p>(zatím nic?)</p>
 </div>
 
-<div id="after_game">
-    <p id="after_game_p">Takhle jsi dopadl...</p>
+<div id="game_post" style="display: none">
+    <p id="game_post_p">Takhle jsi dopadl...</p>
     <form>
-        <button id="feedback_form_b" type="submit" formaction="/">Dát zpětnou vazbu</button>
+        <button id="feedback_form_b" type="submit" formaction="/">Dát zpětnou vazbu (TODO)</button>
     </form>
 
     <form>
-        <button id="save_results_b" type="submit" formaction="/">Uložit výsledky</button>
+        <button id="save_results_b" type="submit" formaction="/">Uložit výsledky (TODO)</button>
     </form>
 
     <form>

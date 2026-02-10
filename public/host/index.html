@@ -5,16 +5,57 @@
     <title> HOST | LékárničkaGame </title>
     <link rel="stylesheet" href="/styles.css">
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdn.socket.io/4.8.3/socket.io.min.js"></script>
-    <script src="/common.js"></script>
 </head>
 
 <body>
 
 <h1> Lékárnička Game: vedoucí </h1>
 
-<!--content according to drawings -->
+<!-- content according to drawings -->
+
+<div id="game_none" style="display: none">
+<!--    button -->
+    <button id="new_game_b" onclick="newGameAsHost()" >Nová veřejná hra</button>
+
+</div>
+
+<div id="game_in_lobby" style="display: none">
+    <p id="lobby_host_p">Spusť hru, až se všichni připojí.</p>
+    <ul id="player_list_host">
+
+    </ul>
+
+    <button id="start_game_b" onclick="startGameAsHost()" >Začít hru</button>
+
+</div>
+
+<div id="game_ingame" style="display: none">
+
+    <p id="game_host_p">Zadání: skládáte lékárničku na jednodenní výlet s dětmi do Brd.</p>
+    <button id="eval_game_b" onclick="moveToEvalAsHost()" >Ukončit hru</button>
+
+</div>
+
+<div id="game_eval" style="display: none">
+
+    <p id="evaluation_host_p">Lékárnička: vyhodnocení</p>
+
+    <p id="mock_eval_p">Tohle je placeholder pro evaluační logiku.</p>
+
+
+    <button id="end_game_b" onclick="endGameAsHost()" >Ukončit hru</button>
+
+</div>
+
+<div id="game_post" style="display: none">
+
+    <p id="postgame_host_p">Konec hry. Svůj výsledek si můžete stáhnout.</p>
+
+    <button id="the_end_b" onclick="returnToBeginning()" >Konec</button>
+</div>
+
+
+
 
 <div id="debug" style="display: none">
     <!-- TODO conditional links to host, play game or administrate site -->
@@ -31,6 +72,9 @@
     <p id="log">Log: <br></p>
 </div>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.socket.io/4.8.3/socket.io.min.js"></script>
+<script src="/common.js"></script>
 <script src="index.js"></script>
 </body>
 

@@ -3,12 +3,13 @@ const game_in_lobby = "game_in_lobby";
 const game_ingame = "game_ingame";
 const game_eval = "game_eval";
 const game_post = "game_post";
+
+const all_phases = [game_none, game_in_lobby, game_ingame, game_eval, game_post];
+
 const client_host = "client_host";
 const client_player = "client_player";
 const client_admin = "client_admin";
 const client_menu = "client_menu";
-
-
 
 // log (logs logs)
 function log(msg) {
