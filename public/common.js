@@ -53,3 +53,14 @@ function game_status_text(game_state){
     return reply + ` (${game_state})`
 }
 
+function player_list_string(state){
+
+    let ulInner = "";
+
+    state.players.forEach((playerID) => {
+        ulInner += `<li>${playerID} (${state.player_data[playerID]})</li>`;
+    });
+
+    return ulInner;
+}
+

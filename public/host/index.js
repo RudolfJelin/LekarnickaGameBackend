@@ -7,13 +7,23 @@ const socket = io();
 const client_type = "client_host";
 let old_known_phase = null;
 
+
+// render new player data
+function update_player_list(state) {
+    document.getElementById("lobby_host_p_2").innerText = `Hráčů připojeno: ${state.players.size}`
+
+    let ul = document.getElementById("player_list_host");
+    ul.innerHTML = player_list_string(state);
+
+}
+
 // any time the server sends something directly to this client, this code runs
 socket.on('e_connected', async (socket_id) => {
     //  connection happened, server sent an "e_connected" event with no payload
     log('Connected to server, my socket id is ' + socket_id);
 
     // just ask for info to show
-    socket.emit('e_update', client_type);
+    socket.emit('e_first_update', client_type);
 });
 
 socket.on('e_state', async (state) => {
@@ -23,6 +33,11 @@ socket.on('e_state', async (state) => {
         update_phase(state['phase']);
         old_known_phase = state['phase'];
     }
+
+    console.log("updateing player list. ", state.players, typeof state.players, JSON.stringify(state))
+    update_player_list(state);
+
+
 });
 
 // new state recieved that differs from the previous one.
@@ -44,5 +59,27 @@ function newGameAsHost(){
 
     // send request to server
     // hope for the best
-    socket.emit('e_host_wants_new_game');
+    socket.emit('e_host_req_next_phase', game_in_lobby);
 }
+
+function startGameAsHost(){
+    // host wants to move the lobby into the main game
+
+    socket.emit('e_host_req_next_phase', game_ingame);
+
+}
+
+function moveToEvalAsHost(){
+    socket.emit('e_host_req_next_phase', game_eval);
+}
+
+function endGameAsHost(){
+    socket.emit('e_host_req_next_phase', game_post);
+}
+
+function returnToBeginning(){
+    socket.emit('e_host_req_next_phase', game_none);
+    window.location.href = "/";
+}
+
+

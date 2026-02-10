@@ -20,15 +20,36 @@ const client_player = "client_player";
 const client_admin = "client_admin";
 const client_menu = "client_menu";
 
+const all_phases = [game_none, game_in_lobby, game_ingame, game_eval, game_post];
+
 const default_game_len_seconds = 10;
 
 let state = {
     "phase": game_none,
     "timer": -1,
-    "player_data": {}
+    "players": [], // list of player IDs
+    "player_data": {} // actual player data
 }
 
 let state_old = "";
+
+function previous_phase(phase){
+    switch(phase){
+        case game_in_lobby:
+            return game_none;
+        case game_ingame:
+            return game_in_lobby;
+        case game_eval:
+            return game_ingame;
+        case game_post:
+            return game_eval;
+        case game_none:
+            return game_post;
+        default:
+            // TODO
+            return game_none;
+    }
+}
 
 // send state to everyone (including self(?) but whatever)
 // call this every time state is changed.
@@ -66,7 +87,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log(`User ${socket.id} disconnected`);
 
-        // remove from state
+        // todo: remove from State
     });
 
     socket.on('e_update', () => {
@@ -75,7 +96,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('e_first_update', (client_type) => {
-        // a new client has appeared
+        // a new client has appeared (player or host)
 
         // sanity check
         if (state['player_data'][socket.id] !== undefined) {
@@ -86,23 +107,35 @@ io.on('connection', (socket) => {
         // add to state if not exists
         state["player_data"][socket.id] = {"client_type": client_type};
 
+        // add to player list if player list
+        state['players'].push(socket.id);
+
         // then update if changed
         update_state_for_all();
     });
 
-    socket.on('e_host_wants_new_game', () => {
-        // host has requested to start a new game
+    socket.on('e_host_req_next_phase', (new_phase) => {
+        // host has requested to move up the phase
 
-        if (state.phase !== game_none){
-            console.error("Host requested new game, but there already is a game.")
+        if (state.phase === new_phase){
+            console.error("Host requested phase change, but already in this phase.")
             return;
         }
 
+        if (state.phase !== previous_phase(new_phase)){
+            console.error("Host requested different phase change than allowed.")
+            return;
+        }
+        // phase change is natural, going to the n+1th phase
+
+        // TODO here: sometimes there will be some associated game logic to evaluate BEFORE moving on
+
         // update state and let everyone know
-        state.phase = game_in_lobby;
+
+        state.phase = new_phase;
         update_state_for_all();
 
-    })
+    });
 
 
 });
