@@ -91,7 +91,10 @@ function update_phase(new_phase, old_phase) {
     }
 
     if (new_phase === game_eval){
-        // selection phase ended
+        // selection phase ended --> upload all my data to server. Server will then process all the data.
+
+        // TODO actual selection logic
+        socket.emit("e_selected_items", ["obvaz"]);
     }
 }
 

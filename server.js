@@ -24,11 +24,14 @@ const all_phases = [game_none, game_in_lobby, game_ingame, game_eval, game_post]
 
 const default_game_len_seconds = 10;
 
+const items = ["obvaz", "ibuprofen", "nůžky"]
+
 let state = {
     "phase": game_none,
     "timer": -1,
     "players": [], // list of player IDs
-    "player_data": {} // actual player data
+    "player_data": {}, // actual player data
+    "game_results": [] // for each item: name, %, right/conditional/optional/wrong/undeclared
 }
 
 let state_old = "";
@@ -74,7 +77,60 @@ function update_state_for_one(socket){
 }
 
 
+function delete_player(socket) {
+    //remove from State
+    delete state.player_data[socket.id];
+    state.players = state.players.filter(e => e !== socket.id);
+
+    // update all
+    update_state_for_all();
+}
+
+// this is called when host triggers end of main game phase and start of evaluation phase and all players have submitted their shit
+function onAllPlayersSubmittedSelections() {
+    // double-check if everyone submitted, if not, fill in blanks
+    state.players.forEach((id) => {
+       if (!("selected_items" in state.player_data[id])){
+           state.player_data[id].selected_items = [];
+       }
+    });
+
+    // number of players
+    let player_ids = state.players.filter(id => state.player_data[id].client_type === client_player);
+    let num_players = player_ids.length;
+
+    state.game_results = [];
+
+    // do the calculations
+    items.forEach((item) => {
+        // for each item, calculate its %
+        let count = player_ids.filter(id => {
+            return state.player_data[id].selected_items.includes(item);
+        }).length;
+
+
+        // ...[for each item: name, %, right/conditional/optional/wrong/undeclared]
+        state.game_results.push({
+            "item": item,
+            "percent": (count * 100.0 / num_players),
+            "declared": "undeclared"
+        });
+    })
+
+    // TODO sort array
+    state.game_results.sort((a, b) => parseFloat(b.percent) - parseFloat(a.percent));
+
+
+    // data changed --> update all at the end.
+    update_state_for_all();
+
+    io.emit("e_game_stats_calculated", state.game_results);
+}
+
+
 // connection code
+
+
 
 // this code runs for each socket(host user or player user) separately
 io.on('connection', (socket) => {
@@ -87,12 +143,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log(`User ${socket.id} disconnected`);
 
-        //remove from State
-        delete state.player_data[socket.id];
-        state.players = state.players.filter(e => e !== socket.id);
-
-        // update all
-        update_state_for_all();
+        delete_player(socket);
     });
 
     socket.on('e_update', () => {
@@ -142,7 +193,34 @@ io.on('connection', (socket) => {
 
     });
 
+    socket.on("e_selected_items", (selected_items) => {
 
+        // check if player exists
+        if (!(socket.id in state.player_data)){
+            // player doesn't exist??
+            console.error(`Nonexistent player sent their data? ${socket.id} ${selected_items}`);
+        }
+
+        // register selected items
+        state.player_data[socket.id]['selected_items'] = selected_items;
+
+
+        // if all players have registered, go to evaluation phase
+        // TODO
+        if (state.players.every((player) =>{
+            return state.player_data[player].client_type === client_host || ('selected_items' in state.player_data[player]);
+        })){
+            // go to eval
+            onAllPlayersSubmittedSelections();
+        }
+
+    });
+
+    socket.on("e_host_forces_evaluation", ()=>{
+        // prevents weird states where one client didnt sent anything and blocks evaluation
+        // TODO implement on the client side
+        onAllPlayersSubmittedSelections();
+    });
 });
 
 

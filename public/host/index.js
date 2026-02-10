@@ -40,6 +40,19 @@ socket.on('e_state', async (state) => {
 
 });
 
+// called when server finishes calculating most selected items
+socket.on('e_game_stats_calculated', (game_results_copy)=>{
+
+    // check if is in right phase
+    if (old_known_phase !== game_eval){
+        console.error("Recieved evaluation command, but not in evaluation phase!");
+        return;
+    }
+
+    // show
+    document.getElementById("mock_eval_p").innerText = `Výsledky: ${JSON.stringify(game_results_copy)}`
+});
+
 // new state recieved that differs from the previous one.
 function update_phase(new_phase) {
     if (new_phase === null){
@@ -52,6 +65,8 @@ function update_phase(new_phase) {
         // console.log(phase, typeof phase, new_phase);
         document.getElementById(phase).style.display = (new_phase !== phase) ? "none" : "block";
     });
+
+
 }
 
 function newGameAsHost(){
