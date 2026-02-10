@@ -28,7 +28,7 @@ socket.on('e_state', async (state) => {
     state_p.innerText = JSON.stringify(state, null, 2);
 
     // update status
-    status_p.innerText = `Stav hry: ${state["phase"]}`;
+    status_p.innerText = game_status_text(state.phase);
 
     player_button.disabled  = !(state["phase"] === game_in_lobby);
     host_button.disabled  = !(state["phase"] === game_none);

@@ -23,7 +23,7 @@ socket.on('e_connected', async (socket_id) => {
     log('Connected to server, my socket id is ' + socket_id);
 
     // just ask for info to show
-    socket.emit('e_first_update', client_type);
+    socket.emit('e_first_update', client_type, "host");
 });
 
 socket.on('e_state', async (state) => {

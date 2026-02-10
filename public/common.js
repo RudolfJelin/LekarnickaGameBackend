@@ -29,21 +29,21 @@ function request_state(socket){
 }
 
 function game_status_text(game_state){
-    let reply = "";
+    let reply = "Stav hry: ";
     if (game_state === game_none){
         reply += "Žádná hra neprobíhá.";
     }
     else if (game_state === game_in_lobby){
-        reply += "Hra: čeká se na hráče.";
+        reply += "Čeká se na hráče.";
     }
     else if (game_state === game_ingame){
-        reply += "Hra: hra probíhá.";
+        reply += "Hra probíhá.";
     }
     else if (game_state === game_eval){
-        reply += "Hra: hra probíhá.";
+        reply += "Hra probíhá.";
     }
     else if (game_state === game_post){
-        reply += "Hra: hra skončila, brzo se uvolní.";
+        reply += "Hra skončila, brzo se uvolní.";
     }
     else{
         reply += "ERROR?";
@@ -65,7 +65,7 @@ function player_list_string(state){
             return; // skip
         }
 
-        ulInner += `<li>${playerID} (${JSON.stringify(user)})</li>`;
+        ulInner += `<li>${user.client_name} (${JSON.stringify(user)})</li>`;
     });
 
     return ulInner;

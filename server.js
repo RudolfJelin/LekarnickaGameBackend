@@ -100,7 +100,7 @@ io.on('connection', (socket) => {
         update_state_for_one(socket);
     });
 
-    socket.on('e_first_update', (client_type) => {
+    socket.on('e_first_update', (client_type, client_name) => {
         // a new client has appeared (player or host)
 
         // sanity check
@@ -110,7 +110,7 @@ io.on('connection', (socket) => {
         }
 
         // add to state if not exists
-        state["player_data"][socket.id] = {"client_type": client_type};
+        state["player_data"][socket.id] = {"client_type": client_type, "client_name": client_name};
 
         // add to player list if player list
         state['players'].push(socket.id);
