@@ -58,9 +58,20 @@ function player_list_string(state){
     let ulInner = "";
 
     state.players.forEach((playerID) => {
-        ulInner += `<li>${playerID} (${state.player_data[playerID]})</li>`;
+
+        let user = state.player_data[playerID];
+
+        if (user.client_type !== "client_player"){
+            return; // skip
+        }
+
+        ulInner += `<li>${playerID} (${JSON.stringify(user)})</li>`;
     });
 
     return ulInner;
+}
+
+function count_players(state){
+    return state.players.filter(id => state.player_data[id].client_type === client_player).length
 }
 

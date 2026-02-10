@@ -10,7 +10,7 @@ let old_known_phase = null;
 
 // render new player data
 function update_player_list(state) {
-    document.getElementById("lobby_host_p_2").innerText = `Hráčů připojeno: ${state.players.size}`
+    document.getElementById("lobby_host_p_2").innerText = `Hráčů připojeno: ${count_players(state)}`
 
     let ul = document.getElementById("player_list_host");
     ul.innerHTML = player_list_string(state);

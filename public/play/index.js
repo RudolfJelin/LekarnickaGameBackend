@@ -15,7 +15,7 @@ let old_known_phase = null;
 
 // render new player data
 function update_player_list(state) {
-    document.getElementById("game_in_lobby_p_2").innerText = `Hráčů připojeno: ${state.players.size}`
+    document.getElementById("game_in_lobby_p_2").innerText = `Hráčů připojeno: ${count_players(state)}`
 
     let ul = document.getElementById("lobby_list");
     ul.innerHTML = player_list_string(state);
@@ -27,7 +27,8 @@ socket.on('e_connected', async (socket_id) => {
     //  connection happened, server sent an "e_connected" event with no payload
     log('Connected to server, my socket id is ' + socket_id);
 
-    // just ask for info to show
+    // debug show my name
+    document.getElementById("my_name").innerText = `Moje jméno: ${socket_id}`;
 
     // i should register me to the server
     socket.emit('e_first_update', client_type);

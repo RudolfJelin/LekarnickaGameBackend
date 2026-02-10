@@ -60,7 +60,7 @@ function update_state_for_all(force_update = false){
         return;
     }
 
-    console.log(`Sending state to everyone... ${JSON.stringify(state)}`);
+    console.log(`Sending state to everyone... `);
     io.emit("e_state", state);
 
     // save a snapshot. DON'T send to all if same.
@@ -87,7 +87,12 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log(`User ${socket.id} disconnected`);
 
-        // todo: remove from State
+        //remove from State
+        delete state.player_data[socket.id];
+        state.players = state.players.filter(e => e !== socket.id);
+
+        // update all
+        update_state_for_all();
     });
 
     socket.on('e_update', () => {
