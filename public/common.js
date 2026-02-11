@@ -31,26 +31,36 @@ function log(msg) {
     }
 }
 
+
+function quit(){
+    window.location.href = "/";
+}
+
+
 // sends a state update request to the server
 function request_state(socket){
     socket.emit("e_update");
 }
 
-function game_status_text(game_state){
+function game_status_text(state){
+    let game_phase = state.phase;
+    let total_players = count_players(state);
+    let total_hosts = count_players(state, client_host);
+
     let reply = "Stav hry: ";
-    if (game_state === game_none){
+    if (game_phase === game_none){
         reply += "Žádná hra neprobíhá.";
     }
-    else if (game_state === game_in_lobby){
-        reply += "Čeká se na hráče.";
+    else if (game_phase === game_in_lobby){
+        reply += "Čeká se na hráče. Můžeš se připojit.";
     }
-    else if (game_state === game_ingame){
-        reply += "Hra probíhá.";
+    else if (game_phase === game_ingame){
+        reply += "Hra probíhá, ale můžeš se ještě připojit.";
     }
-    else if (game_state === game_eval){
-        reply += "Hra probíhá.";
+    else if (game_phase === game_eval){
+        reply += "Hra probíhá, vedoucí vyhodnocuje výsledky.";
     }
-    else if (game_state === game_post){
+    else if (game_phase === game_post){
         reply += "Hra skončila, brzo se uvolní.";
     }
     else{
@@ -58,7 +68,7 @@ function game_status_text(game_state){
     }
 
 
-    return reply + ` (${game_state})`
+    return reply + ` ${total_players} hráč(ů) / ${total_hosts} vedoucí(ch).`
 }
 
 function player_list_string(state){
@@ -90,8 +100,8 @@ function host_results_string(results){
     return ulInner;
 }
 
-function count_players(state){
-    return state.players.filter(id => state.player_data[id].client_type === client_player).length
+function count_players(state, client_type = client_player){
+    return state.players.filter(id => state.player_data[id].client_type === client_type).length
 }
 
 function previous_phase(phase){

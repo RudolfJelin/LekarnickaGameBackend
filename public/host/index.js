@@ -36,6 +36,10 @@ socket.on('e_state', async (state) => {
 
     // console.log("updateing player list. ", state.players)
     update_player_list(state);
+
+    // dont allow starting game with no players
+    el("start_game_b").disabled = count_players(state) === 0;
+    el("start_game_b").innerText = count_players(state) === 0 ? "Pro spuštění musí být aspoň 1 hráč" : "Začít hru";
 });
 
 // called when server finishes calculating most selected items
@@ -53,6 +57,34 @@ socket.on('e_game_stats_calculated', (game_results_copy)=>{
     // show debug list
     el("result_eval_ul").innerHTML = host_results_string(game_results_copy);
 });
+
+socket.on('e_sorry_already_exists_host', async ()=>{
+    await swal({
+        title: "Nejde to :(",
+        text: "Někdo už tu je jako vedoucí hry",
+        icon: "error",
+        button: "Odejít",
+        closeOnClickOutside: true,
+        closeOnEsc: true
+    });
+
+    // quit to menu just to be sure
+    quit();
+});
+
+socket.on('e_sorry_game_was_cancelled_by_force', async () => {
+    await swal({
+        title: "Hra byla zrušena :(",
+        text: "Admin nebo error shodili hru",
+        icon: "error",
+        button: "Odejít",
+        closeOnClickOutside: true,
+        closeOnEsc: true
+    });
+
+    // quit to menu just to be sure
+    quit();
+})
 
 // new state recieved that differs from the previous one. Do something about it
 function update_phase(new_phase, old_phase) {

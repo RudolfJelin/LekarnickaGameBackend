@@ -9,35 +9,18 @@
 
 <body>
 
-<form>
-    <button id="home" type="submit" formaction="/">🏠</button>
-</form>
+<h1> Lékárnička Game Administrace </h1>
 
-<h1> Lékárnička Game: admin </h1>
+<p id="status_sentence">Načítám...</p>
+<button id="cancelAll" onclick="cancel_ongoing_game()">Zrušit hru</button>
 
-<!-- content according to drawings -->
+<ol id="player-list">
 
-<div id="game_none" style="display: none">
-
-</div>
-
-<div id="game_in_lobby" style="display: none">
-
-</div>
-
-<div id="game_ingame" style="display: none">
-
-</div>
-
-<div id="game_eval" style="display: none">
-
-</div>
-
-<div id="game_post" style="display: none">
-
-</div>
+</ol>
 
 
+<button id="asPlayer" onclick="playAsPlayer()" disabled >Hrát</button>
+<button id="asHost" onclick="playAsHost()" disabled>Založit novou hru</button>
 
 
 <div id="debug" style="display: none">
@@ -59,7 +42,7 @@
 <script src="https://cdn.socket.io/4.8.3/socket.io.min.js"></script>
 <script src="/common.js"></script>
 <script src="index.js"></script>
-</body>
 
+</body>
 </html>
 

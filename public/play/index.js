@@ -118,6 +118,21 @@ socket.on("e_list_of_items", (items) => {
     resetSearch();
 });
 
+
+socket.on('e_sorry_game_was_cancelled_by_force', async () => {
+    await swal({
+        title: "Hra byla zrušena :(",
+        text: "Admin nebo error shodili hru",
+        icon: "error",
+        button: "Odejít",
+        closeOnClickOutside: true,
+        closeOnEsc: true
+    });
+
+    // quit to menu just to be sure
+    quit();
+})
+
 // a checkbox has been toggled
 function toggleCheckbox(checkbox, i){
     // handle checkbox checking
@@ -153,7 +168,7 @@ function toggleSelectedOnly(checkbox) {
 
     // and retrigger search
     // hide elements that do not correspond, show the rest
-    filter_shoplayer-status-barwn_items();
+    filter_shown_items(); // ???
 
 }
 
@@ -260,9 +275,4 @@ function update_phase(new_phase, old_phase) {
         socket.emit("e_requested_item_list");
     }
 }
-
-function quit(){
-    window.location.href = "/";
-}
-
 

@@ -28,9 +28,9 @@ socket.on('e_state', async (state) => {
     state_p.innerText = JSON.stringify(state, null, 2);
 
     // update status
-    status_p.innerText = game_status_text(state.phase);
+    status_p.innerText = game_status_text(state);
 
-    player_button.disabled  = !(state["phase"] === game_in_lobby);
+    player_button.disabled  = !(state["phase"] === game_in_lobby || state["phase"] === game_none);
     host_button.disabled  = !(state["phase"] === game_none);
 });
 

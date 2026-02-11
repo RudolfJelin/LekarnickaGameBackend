@@ -73,6 +73,16 @@ function is_player(id){
     return state.player_data[id].client_type === client_player;
 }
 
+// this function resets the server as if it was just restarted (fr fr)
+// todo in future: reset loaded list of items as well, as host may be able to modify it
+function reset_all(dont_update = false){
+    state = copy(default_state);
+
+    if (!dont_update){
+        update_state_for_all(true);
+    }
+}
+
 // send state to everyone (including self(?) but whatever)
 // call this every time state is changed.
 function update_state_for_all(force_update = false){
@@ -181,6 +191,12 @@ io.on('connection', (socket) => {
             return;
         }
 
+        // disallow multiple hosts IF HOST
+        if (client_type === client_host && state.players.some((id) => {return state.player_data[id].client_type === client_host})){
+            socket.emit('e_sorry_already_exists_host');
+            return;
+        }
+
         // add to state if not exists
         state["player_data"][socket.id] = {"client_type": client_type, "client_name": client_name};
 
@@ -212,7 +228,7 @@ io.on('connection', (socket) => {
         // }
         if (new_phase === game_none){
             // game ended completely. Game over. Reset self.
-            state = copy(default_state);
+            reset_all(true);
         }
 
         // update state and let everyone know
@@ -254,6 +270,12 @@ io.on('connection', (socket) => {
         // prevents weird states where one client didnt sent anything and blocks evaluation
         // TODO implement on the client side
         onAllPlayersSubmittedSelections();
+    });
+
+    socket.on("e_admin_reset", ()=>{
+        // reset and update
+        reset_all();
+        io.emit("e_sorry_game_was_cancelled_by_force");
     });
 });
 
