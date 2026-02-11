@@ -7,13 +7,16 @@
 // start with just a "next phase" button.
 //
 
-
 const socket = io();
 const client_type = "client_player";
 let old_known_phase = null;
 
 const min_name_length = -1; // TODO: 3
 const max_name_length = 16;
+
+let items_data = [];
+let search_query = "";
+let filter_only_selected = false;
 
 function el(e){
     return document.getElementById(e);
@@ -89,11 +92,11 @@ socket.on("e_list_of_items", (items) => {
     // clear list of items
     let article_container = el("article-container");
     article_container.innerHTML = "";
+    items_data = [];
 
     // populate list
     let i = 0;
     items.forEach((item) => {
-        i++;
 
         // spawn an element
         let article = `<article class="player-article" id="generated-article-${i}">
@@ -104,17 +107,128 @@ socket.on("e_list_of_items", (items) => {
 
         article_container.innerHTML += article;
 
+        // keep track
+        items_data.push({
+            "id": i,
+            "item": item,
+            "article_id":`generated-article-${i}`,
+            "checkbox_id": `generated-toggle-${i}`,
+            "p": `generated-p-${i}`,
+            "selected": false
+        });
+
+        i++;
     });
 
-
+    // trigger a cleanup (BIG one, just to be EXTRA sure)
+    resetSearch();
 });
 
+// a checkbox has been toggled
 function toggleCheckbox(checkbox, i){
     // handle checkbox checking
     let is_checked = checkbox.checked;
-    console.log(checkbox, i, "clicked, now ", is_checked);
+    // console.log(checkbox, i, "clicked, now ", is_checked);
+
+    // style the article
+    items_data[i].selected = is_checked;
+    el(items_data[i].article_id).style.backgroundColor = is_checked ? "#b0ff8e" : "lightgray";
+
+    // trigger redraw
+    filter_shown_items();
 }
 
+// the search message has changed
+function onSearchEdit(new_query)
+{
+    console.log("new_query", new_query);
+
+    // remember new status
+    search_query = new_query; // ?
+
+    // and retrigger search
+    // hide elements that do not correspond, show the rest
+    filter_shown_items();
+}
+
+// "only selected" toggle
+function toggleSelectedOnly(checkbox) {
+
+    // remember new status
+    filter_only_selected = checkbox.checked;
+
+    // and retrigger search
+    // hide elements that do not correspond, show the rest
+    filter_shoplayer-status-barwn_items();
+
+}
+
+function matches_search_query(item_name, query){
+    if (query === "") {
+        return true;
+    }
+
+    if (item_name.includes(query)) {
+        return true;
+    }
+
+    // TODO other, fuzzier string matches...
+
+    return false;
+}
+
+// trigger this when some input parameter changed
+function filter_shown_items(){
+
+    let total = 0;
+    let total_visible = 0;
+    let total_selected = 0;
+    let total_selected_and_visible = 0;
+
+    items_data.forEach(item => {
+       // for each item:
+
+        // decide whether to show it
+        let show_it = true;
+
+        if (filter_only_selected && item.selected === false){
+            show_it = false;
+        }
+
+        if (!matches_search_query(item.item, search_query)){
+            show_it = false;
+        }
+
+        // calculate variables
+        if (true) { total++; }
+        if (show_it){ total_visible++; }
+        if (item.selected){ total_selected++; }
+        if (show_it && item.selected){ total_selected_and_visible++; }
+
+        // update visibility
+        el(item.article_id).style.display = show_it ? "grid" : "none";
+    });
+
+    // update status text
+    // noinspection UnnecessaryLocalVariableJS
+    let status_text = `Zobrazeno ${total_visible} z ${total} položek celkem,\n`
+     + `(${total_selected_and_visible} z ${total_selected} vybraných položek)`;
+
+    el("player-status-bar").innerText = status_text;
+
+}
+
+// trigger this when all search parameters should be reset, and the visibility too.
+function resetSearch(){
+    filter_only_selected = false;
+    search_query = "";
+
+    // and now, match reality
+    el("only-selected-toggle").checked = false;
+    el("player-input-search").value = "";
+
+    filter_shown_items();
+}
 
 // new state recieved that differs from the previous one.
 function update_phase(new_phase, old_phase) {
@@ -139,11 +253,16 @@ function update_phase(new_phase, old_phase) {
     else if (new_phase === game_eval){
         // selection phase ended --> upload all my data to server. Server will then process all the data.
 
-        // TODO actual selection logic
-        socket.emit("e_selected_items", ["obvaz"]);
+        // selection logic: extract all selected
+        let result = items_data.filter(item => item.selected === true).map(item => {return item.item});
+
+        console.log(JSON.stringify(result), items_data);
+
+        socket.emit("e_selected_items", result);
     }
 
     else if (new_phase === game_ingame){
+        resetSearch(); // trigger a cleanup possibly
         socket.emit("e_requested_item_list");
     }
 }

@@ -34,7 +34,7 @@ socket.on('e_state', async (state) => {
         old_known_phase = state['phase'];
     }
 
-    console.log("updateing player list. ", state.players)
+    // console.log("updateing player list. ", state.players)
     update_player_list(state);
 
 

@@ -27,9 +27,9 @@ body {
     width: min-content;
 
     display: grid;
-    grid-template-rows: 6rem 1fr;
+    grid-template-rows: 10rem 1fr;
 
-    max-height: 50vh;
+    max-height: 70vh;
 }
 
 .player-items {
@@ -48,7 +48,7 @@ body {
 .player-input-div {
 
     display: grid;
-    grid-template-columns: 5fr 1fr 1fr;
+    grid-template-columns: 3fr 1fr;
 }
 
 .player-search-row-div {
@@ -62,4 +62,9 @@ body {
     padding: 0.3rem;
     margin: 0.3rem;
 }
+#only-selected-toggle {
 
+    font-size: 1rem;
+    padding: 0.3rem;
+    margin: 0.3rem;
+}

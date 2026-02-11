@@ -213,6 +213,8 @@ io.on('connection', (socket) => {
 
     socket.on("e_selected_items", (selected_items) => {
 
+        console.log("selected items", JSON.stringify(selected_items));
+
         // check if player exists
         if (!(socket.id in state.player_data)){
             // player doesn't exist??

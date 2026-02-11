@@ -36,16 +36,18 @@
         <div class="input-container">
             <div class="player-input-div">
                 <div id="player-search-div" class="player-search-row-div">
-                    <label for="search"></label><input type="text" id="search" class="player-input-search">
+                    <label for="player-input-search"></label><input type="text" id="player-input-search" class="player-input-search" oninput="onSearchEdit(this.value);">
                 </div>
                 <div id="player-selected-div" class="player-search-row-div">
                     <!--                toggle to filter selected only-->
-                    <button id="player-selected-button">Jen vybrané</button>
+<!--                    <button id="player-selected-button">Jen vybrané</button>-->
+                    <label for="only-selected-toggle">Jen vybrané</label><input type="checkbox" id="only-selected-toggle" onchange="toggleSelectedOnly(this)" >
+
                 </div>
-                <div id="player-clear-div" class="player-search-row-div">
-                    <!--                toggle to filter selected only-->
-                    <button id="player-clear-button">Vymazat hledání</button>
-                </div>
+<!--                <div id="player-clear-div" class="player-search-row-div">-->
+<!--                    &lt;!&ndash;                toggle to filter selected only&ndash;&gt;-->
+<!--                    <button id="player-clear-button">Vymazat hledání</button>-->
+<!--                </div>-->
             </div>
             <p id="player-status-bar">Načítám status text...</p>
         </div>
