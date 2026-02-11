@@ -14,9 +14,12 @@ body {
     margin-block: 0.2rem;
     padding: 0.5rem;
 
-    button {
-        font-size: 1rem;
-    }
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+
+    /*button {*/
+    /*    font-size: 1rem;*/
+    /*}*/
 }
 
 .player-main {
@@ -53,3 +56,10 @@ body {
     padding: 0.3rem;
     margin: 0.3rem;
 }
+
+.player-article-toggle {
+
+    padding: 0.3rem;
+    margin: 0.3rem;
+}
+

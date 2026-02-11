@@ -197,14 +197,18 @@ io.on('connection', (socket) => {
 
         // TODO here: sometimes there will be some associated game logic to evaluate BEFORE moving on
         // at phase of MAIN GAME: send information about options to choose from
-        if (new_phase === game_ingame){
-            io.emit("e_list_of_items", items);
-        }
+        // if (new_phase === game_ingame){
+        // MOVED to separate request
+        // }
 
         // update state and let everyone know
         state.phase = new_phase;
         update_state_for_all();
 
+    });
+
+    socket.on("e_requested_item_list", ()=>{
+        io.emit("e_list_of_items", items);
     });
 
     socket.on("e_selected_items", (selected_items) => {

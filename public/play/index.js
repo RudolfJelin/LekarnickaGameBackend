@@ -12,6 +12,16 @@ const socket = io();
 const client_type = "client_player";
 let old_known_phase = null;
 
+const min_name_length = -1; // TODO: 3
+const max_name_length = 16;
+
+function el(e){
+    return document.getElementById(e);
+}
+
+function random_name(){
+    return `Player${Math.floor(Math.random()*1000).toString().substring(0, 4)}`;
+}
 
 // render new player data
 function update_player_list(state) {
@@ -46,13 +56,17 @@ socket.on('e_connected', async (socket_id) => {
         closeOnEsc: false,
     });
 
-    while (name.trim().length < 3 || name.trim().length > 15) {
-        name = await swal("Zadej jméno (3-15 znaků):", {
+    while (name.trim().length < min_name_length || name.trim().length > max_name_length) {
+        name = await swal(`Zadej jméno (${min_name_length}-${max_name_length} znaků):`, {
             content: "input",
             button: "Přihlásit se",
             closeOnClickOutside: false,
             closeOnEsc: false,
         });
+    }
+
+    if (name.length < 1) {
+        name = random_name();
     }
 
     on_name_selected(socket_id, name.trim());
@@ -72,10 +86,34 @@ socket.on('e_state', async (state) => {
 
 socket.on("e_list_of_items", (items) => {
 
-    // setup list of items
-    el("article-container")
+    // clear list of items
+    let article_container = el("article-container");
+    article_container.innerHTML = "";
+
+    // populate list
+    let i = 0;
+    items.forEach((item) => {
+        i++;
+
+        // spawn an element
+        let article = `<article class="player-article" id="generated-article-${i}">
+            <p id="generated-p-${i}">${item}</p>
+            <input type="checkbox" class="player-article-toggle" id="generated-toggle-${i}" onchange="toggleCheckbox(this, ${i})" >
+        </article>
+        `
+
+        article_container.innerHTML += article;
+
+    });
+
 
 });
+
+function toggleCheckbox(checkbox, i){
+    // handle checkbox checking
+    let is_checked = checkbox.checked;
+    console.log(checkbox, i, "clicked, now ", is_checked);
+}
 
 
 // new state recieved that differs from the previous one.
@@ -98,11 +136,15 @@ function update_phase(new_phase, old_phase) {
         socket.disconnect();
     }
 
-    if (new_phase === game_eval){
+    else if (new_phase === game_eval){
         // selection phase ended --> upload all my data to server. Server will then process all the data.
 
         // TODO actual selection logic
         socket.emit("e_selected_items", ["obvaz"]);
+    }
+
+    else if (new_phase === game_ingame){
+        socket.emit("e_requested_item_list");
     }
 }
 
