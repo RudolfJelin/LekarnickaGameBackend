@@ -11,6 +11,14 @@ const client_player = "client_player";
 const client_admin = "client_admin";
 const client_menu = "client_menu";
 
+function el(e){
+    return document.getElementById(e);
+}
+
+function random_name(){
+    return `Player${Math.floor(Math.random()*1000).toString().substring(0, 4)}`;
+}
+
 // log (logs logs)
 function log(msg) {
 
@@ -71,7 +79,35 @@ function player_list_string(state){
     return ulInner;
 }
 
+function host_results_string(results){
+
+    let ulInner = "";
+
+    results.forEach((item) => {
+        ulInner += `<li><b>${item.item}</b> (${item.percent}%)</li>`;
+    });
+
+    return ulInner;
+}
+
 function count_players(state){
     return state.players.filter(id => state.player_data[id].client_type === client_player).length
 }
 
+function previous_phase(phase){
+    switch(phase){
+        case game_in_lobby:
+            return game_none;
+        case game_ingame:
+            return game_in_lobby;
+        case game_eval:
+            return game_ingame;
+        case game_post:
+            return game_eval;
+        case game_none:
+            return game_post;
+        default:
+            // TODO
+            return game_none;
+    }
+}

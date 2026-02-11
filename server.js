@@ -27,15 +27,23 @@ const default_game_len_seconds = 10;
 // each item has one main name and can have several "/"-delimited variations in the name
 const items = ["obvaz", "ibuprofen", "nůžky", "aktivní uhlí/živočišné uhlí"]
 
-let state = {
+const default_state = {
     "phase": game_none,
     "timer": -1,
     "players": [], // list of player IDs
     "player_data": {}, // actual player data
+    "game_results_calculated": false,
     "game_results": [] // for each item: name, %, right/conditional/optional/wrong/undeclared
 }
 
+let state = copy(default_state);
+
 let state_old = "";
+
+// somehow, it has come to this
+function copy(object) {
+    return JSON.parse(JSON.stringify(object));
+}
 
 function previous_phase(phase){
     switch(phase){
@@ -131,10 +139,12 @@ function onAllPlayersSubmittedSelections() {
     // TODO sort array
     state.game_results.sort((a, b) => parseFloat(b.percent) - parseFloat(a.percent));
 
+    state.game_results_calculated = true;
 
     // data changed --> update all at the end.
     update_state_for_all();
 
+    // notify all
     io.emit("e_game_stats_calculated", state.game_results);
 }
 
@@ -200,6 +210,10 @@ io.on('connection', (socket) => {
         // if (new_phase === game_ingame){
         // MOVED to separate request
         // }
+        if (new_phase === game_none){
+            // game ended completely. Game over. Reset self.
+            state = copy(default_state);
+        }
 
         // update state and let everyone know
         state.phase = new_phase;

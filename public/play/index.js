@@ -18,13 +18,7 @@ let items_data = [];
 let search_query = "";
 let filter_only_selected = false;
 
-function el(e){
-    return document.getElementById(e);
-}
 
-function random_name(){
-    return `Player${Math.floor(Math.random()*1000).toString().substring(0, 4)}`;
-}
 
 // render new player data
 function update_player_list(state) {

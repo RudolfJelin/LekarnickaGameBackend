@@ -10,9 +10,9 @@ let old_known_phase = null;
 
 // render new player data
 function update_player_list(state) {
-    document.getElementById("lobby_host_p_2").innerText = `Hráčů připojeno: ${count_players(state)}`
+    el("lobby_host_p_2").innerText = `Hráčů připojeno: ${count_players(state)}`
 
-    let ul = document.getElementById("player_list_host");
+    let ul = el("player_list_host");
     ul.innerHTML = player_list_string(state);
 
 }
@@ -30,14 +30,12 @@ socket.on('e_state', async (state) => {
     // server is sending me the new state
 
     if (state['phase'] !== old_known_phase) {
-        update_phase(state['phase']);
+        update_phase(state['phase'], old_known_phase);
         old_known_phase = state['phase'];
     }
 
     // console.log("updateing player list. ", state.players)
     update_player_list(state);
-
-
 });
 
 // called when server finishes calculating most selected items
@@ -49,12 +47,15 @@ socket.on('e_game_stats_calculated', (game_results_copy)=>{
         return;
     }
 
-    // show
-    document.getElementById("mock_eval_p").innerText = `Výsledky: ${JSON.stringify(game_results_copy)}`
+    // show debug text
+    el("mock_eval_p").innerText = `Výsledky: ${JSON.stringify(game_results_copy)}`
+
+    // show debug list
+    el("result_eval_ul").innerHTML = host_results_string(game_results_copy);
 });
 
-// new state recieved that differs from the previous one.
-function update_phase(new_phase) {
+// new state recieved that differs from the previous one. Do something about it
+function update_phase(new_phase, old_phase) {
     if (new_phase === null){
         // undefined
         return;
@@ -63,9 +64,14 @@ function update_phase(new_phase) {
     all_phases.forEach(phase => {
         // console.log(all_phases, typeof all_phases, new_phase, typeof new_phase)
         // console.log(phase, typeof phase, new_phase);
-        document.getElementById(phase).style.display = (new_phase !== phase) ? "none" : "block";
+        el(phase).style.display = (new_phase !== phase) ? "none" : "block";
     });
 
+
+    // explicitly request evaluation data if in eval phase
+    if (new_phase === game_eval){
+        socket.emit('e_update');
+    }
 
 }
 
