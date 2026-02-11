@@ -24,7 +24,8 @@ const all_phases = [game_none, game_in_lobby, game_ingame, game_eval, game_post]
 
 const default_game_len_seconds = 10;
 
-const items = ["obvaz", "ibuprofen", "nůžky"]
+// each item has one main name and can have several "/"-delimited variations in the name
+const items = ["obvaz", "ibuprofen", "nůžky", "aktivní uhlí/živočišné uhlí"]
 
 let state = {
     "phase": game_none,
@@ -52,6 +53,10 @@ function previous_phase(phase){
             // TODO
             return game_none;
     }
+}
+
+function is_player(id){
+    return state.players[id].client_type === client_player;
 }
 
 // send state to everyone (including self(?) but whatever)
@@ -96,7 +101,7 @@ function onAllPlayersSubmittedSelections() {
     });
 
     // number of players
-    let player_ids = state.players.filter(id => state.player_data[id].client_type === client_player);
+    let player_ids = state.players.filter(id => is_player(id));
     let num_players = player_ids.length;
 
     state.game_results = [];
@@ -185,9 +190,12 @@ io.on('connection', (socket) => {
         // phase change is natural, going to the n+1th phase
 
         // TODO here: sometimes there will be some associated game logic to evaluate BEFORE moving on
+        // at phase of MAIN GAME: send information about options to choose from
+        if (new_phase === game_ingame){
+            socket.emit("e_game_start", items);
+        }
 
         // update state and let everyone know
-
         state.phase = new_phase;
         update_state_for_all();
 
