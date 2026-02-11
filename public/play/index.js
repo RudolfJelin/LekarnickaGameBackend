@@ -15,9 +15,9 @@ let old_known_phase = null;
 
 // render new player data
 function update_player_list(state) {
-    document.getElementById("game_in_lobby_p_2").innerText = `Hráčů připojeno: ${count_players(state)}`
+    el("game_in_lobby_p_2").innerText = `Hráčů připojeno: ${count_players(state)}`
 
-    let ul = document.getElementById("lobby_list");
+    let ul = el("lobby_list");
     ul.innerHTML = player_list_string(state);
 
 }
@@ -25,7 +25,7 @@ function update_player_list(state) {
 // after a name has been selected, the player registers to the server
 function on_name_selected(socket_id, my_name) {
     // debug show my name
-    document.getElementById("my_name").innerText = `Moje jméno: ${my_name}`;
+    el("my_name").innerText = `Moje jméno: ${my_name}`;
 
     // i should register me to the server
     socket.emit('e_first_update', client_type, my_name);
@@ -70,6 +70,14 @@ socket.on('e_state', async (state) => {
     update_player_list(state);
 });
 
+socket.on("e_list_of_items", (items) => {
+
+    // setup list of items
+    el("article-container")
+
+});
+
+
 // new state recieved that differs from the previous one.
 function update_phase(new_phase, old_phase) {
     if (new_phase === null){
@@ -80,7 +88,7 @@ function update_phase(new_phase, old_phase) {
     all_phases.forEach(phase => {
         // console.log(all_phases, typeof all_phases, new_phase, typeof new_phase)
         // console.log(phase, typeof phase, new_phase);
-        document.getElementById(phase).style.display = (new_phase !== phase) ? "none" : "block";
+        el(phase).style.display = (new_phase !== phase) ? "none" : "block";
     });
 
     // phase-specific behavior

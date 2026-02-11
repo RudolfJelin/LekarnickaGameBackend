@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 
-<body>
+<body class="player-body">
 <form>
     <button id="home" type="submit" formaction="/">🏠</button>
 </form>
@@ -31,7 +31,60 @@
 </div>
 
 <div id="game_ingame" style="display: none">
-    <p id="game_p">Jsi ve hře. TODO</p>
+    <p id="game_p"><i>Vyberte položky</i></p>
+    <main class="player-main">
+        <div class="input-container">
+            <div class="player-input-div">
+                <div id="player-search-div" class="player-search-row-div">
+                    <label for="search"></label><input type="text" id="search" class="player-input-search">
+                </div>
+                <div id="player-selected-div" class="player-search-row-div">
+                    <!--                toggle to filter selected only-->
+                    <button id="player-selected-button">Jen vybrané</button>
+                </div>
+                <div id="player-clear-div" class="player-search-row-div">
+                    <!--                toggle to filter selected only-->
+                    <button id="player-clear-button">Vymazat hledání</button>
+                </div>
+            </div>
+            <p id="player-status-bar">Načítám status text...</p>
+        </div>
+        <div class="player-items" id="article-container">
+            <article class="player-article">
+                Text
+                <button>Pridat</button>
+            </article>
+            <article class="player-article">
+                Tenhle text by měl být vedle tlačítka a ne nad ním.
+                <button>Pridat</button>
+            </article>
+            <article class="player-article">
+                Text
+                <button>Pridat</button>
+            </article>
+            <article class="player-article">
+                Text
+                <button>Pridat</button>
+            </article>
+            <article class="player-article">
+                Text
+                <button>Pridat</button>
+            </article>
+            <article class="player-article">
+                Text
+                <button>Pridat</button>
+            </article>
+            <article class="player-article">
+                Text
+                <button>Pridat</button>
+            </article>
+            <article class="player-article">
+                Text
+                <button>Pridat</button>
+            </article>
+        </div>
+    </main>
+
 </div>
 
 <div id="game_eval" style="display: none">

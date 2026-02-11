@@ -6,3 +6,50 @@ body {
 .debug{
     white-space: break-spaces;
 }
+
+.player-article {
+    font-size: 1rem;
+
+    background-color: lightgray;
+    margin-block: 0.2rem;
+    padding: 0.5rem;
+
+    button {
+        font-size: 1rem;
+    }
+}
+
+.player-main {
+    margin: auto;
+    width: min-content;
+
+    display: grid;
+    grid-template-rows: 6rem 1fr;
+
+    max-height: 50vh;
+}
+
+.player-items {
+    overflow-y: auto;
+}
+
+.player-body {
+    margin: 0;
+}
+
+.player-input-search {
+    min-width: 50vw;
+    min-height: 2rem;
+}
+
+.player-input-div {
+
+    display: grid;
+    grid-template-columns: 5fr 1fr 1fr;
+}
+
+.player-search-row-div {
+
+    padding: 0.3rem;
+    margin: 0.3rem;
+}

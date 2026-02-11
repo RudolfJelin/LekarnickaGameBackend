@@ -56,7 +56,13 @@ function previous_phase(phase){
 }
 
 function is_player(id){
-    return state.players[id].client_type === client_player;
+    if (!state.players.includes(id)){
+        console.error("Testing for nonexistent player??");
+        return false;
+    }
+
+    // console.log("testing if is player:", id, JSON.stringify(state.players), state.players[id]);
+    return state.player_data[id].client_type === client_player;
 }
 
 // send state to everyone (including self(?) but whatever)
@@ -192,7 +198,7 @@ io.on('connection', (socket) => {
         // TODO here: sometimes there will be some associated game logic to evaluate BEFORE moving on
         // at phase of MAIN GAME: send information about options to choose from
         if (new_phase === game_ingame){
-            socket.emit("e_game_start", items);
+            io.emit("e_list_of_items", items);
         }
 
         // update state and let everyone know
