@@ -3,6 +3,10 @@ body {
     font-family: "Open Sans", sans-serif;
 }
 
+h1 {
+    font-size: 1.4rem;
+}
+
 .debug{
     white-space: break-spaces;
 }
@@ -22,6 +26,9 @@ body {
     /*}*/
 }
 
+.top-bar {
+}
+
 .player-main {
     margin: auto;
     width: min-content;
@@ -37,7 +44,7 @@ body {
 }
 
 .player-body {
-    margin: 0;
+    margin: 10px;
 }
 
 .player-input-search {
@@ -67,4 +74,12 @@ body {
     font-size: 1rem;
     padding: 0.3rem;
     margin: 0.3rem;
+}
+
+.the-end {
+    margin-block: 0.2rem;
+}
+
+button{
+    padding: 0.2rem;
 }

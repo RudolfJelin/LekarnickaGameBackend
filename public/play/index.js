@@ -25,14 +25,14 @@ function update_player_list(state) {
     el("game_in_lobby_p_2").innerText = `Hráčů připojeno: ${count_players(state)}`
 
     let ul = el("lobby_list");
-    ul.innerHTML = player_list_string(state);
+    ul.innerHTML = player_list_string(state, false, socket.id);
 
 }
 
 // after a name has been selected, the player registers to the server
 function on_name_selected(socket_id, my_name) {
     // debug show my name
-    el("my_name").innerText = `Moje jméno: ${my_name}`;
+    el("my_name").innerHTML = `Jsi přihlášen jako: <i>${my_name}</i>`;
 
     // i should register me to the server
     socket.emit('e_first_update', client_type, my_name);

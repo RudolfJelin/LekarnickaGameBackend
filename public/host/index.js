@@ -40,13 +40,16 @@ socket.on('e_state', async (state) => {
     // dont allow starting game with no players
     el("start_game_b").disabled = count_players(state) === 0;
     el("start_game_b").innerText = count_players(state) === 0 ? "Pro spuštění musí být aspoň 1 hráč" : "Začít hru";
+
+    // double check if need to show post-game/pre-eval stats
+    if (state.phase === game_eval && state.game_results_calculated){
+        show_player_response_results(state.game_results)
+    }
 });
 
-// called when server finishes calculating most selected items
-socket.on('e_game_stats_calculated', (game_results_copy)=>{
-
+function show_player_response_results(game_results_copy) {
     // check if is in right phase
-    if (old_known_phase !== game_eval){
+    if (old_known_phase !== game_eval) {
         console.error("Recieved evaluation command, but not in evaluation phase!");
         return;
     }
@@ -56,6 +59,11 @@ socket.on('e_game_stats_calculated', (game_results_copy)=>{
 
     // show debug list
     el("result_eval_ul").innerHTML = host_results_string(game_results_copy);
+}
+
+// called when server finishes calculating most selected items
+socket.on('e_game_stats_calculated', (game_results_copy)=>{
+    show_player_response_results(game_results_copy);
 });
 
 socket.on('e_sorry_already_exists_host', async ()=>{

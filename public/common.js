@@ -49,16 +49,16 @@ function game_status_text(state){
 
     let reply = "Stav hry: ";
     if (game_phase === game_none){
-        reply += "Žádná hra neprobíhá.";
+        reply += "Žádná hra teď neprobíhá.";
     }
     else if (game_phase === game_in_lobby){
-        reply += "Čeká se na hráče. Můžeš se připojit.";
+        reply += "Vedoucí čeká na hráče. Můžeš se připojit.";
     }
     else if (game_phase === game_ingame){
-        reply += "Hra probíhá, ale můžeš se ještě připojit.";
+        reply += "Hra už probíhá, ale můžeš se ještě připojit.";
     }
     else if (game_phase === game_eval){
-        reply += "Hra probíhá, vedoucí vyhodnocuje výsledky.";
+        reply += "Hra probíhá, vedoucí vyhodnocuje výsledky. Můžeš počkat na skončení.";
     }
     else if (game_phase === game_post){
         reply += "Hra skončila, brzo se uvolní.";
@@ -68,22 +68,34 @@ function game_status_text(state){
     }
 
 
-    return reply + ` ${total_players} hráč(ů) / ${total_hosts} vedoucí(ch).`
+    return reply + ` (${total_players} hráč(ů) / ${total_hosts} vedoucí(ch).)`
 }
 
-function player_list_string(state){
+function player_list_string(state, client_type_info = false, me = null){
 
     let ulInner = "";
 
     state.players.forEach((playerID) => {
 
         let user = state.player_data[playerID];
+        let user_type = user.client_type;
+        let user_name = user.client_name;
+        let is_this_me = playerID === me;
+        let me_text = is_this_me ? "" : "";
+        let me_text_2 = is_this_me ? " <i>(já)</i>" : "";
 
-        if (user.client_type !== "client_player"){
-            return; // skip
+        if (!client_type_info){
+            // standard version
+            if (user_type !== "client_player"){
+                return; // skip
+            }
+
+            ulInner += `<li>${me_text}${user_name}${me_text_2}</li>`;
         }
-
-        ulInner += `<li>${user.client_name} (${JSON.stringify(user)})</li>`;
+        else{
+            // full info
+            ulInner += `<li>${user_name} (type=${user_type}, me=${is_this_me})</li>`;
+        }
     });
 
     return ulInner;

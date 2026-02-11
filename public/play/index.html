@@ -7,24 +7,26 @@
 </head>
 
 <body class="player-body">
+<!-- the infamous GAMER BODY -->
 <form>
     <button id="home" type="submit" formaction="/">🏠</button>
 </form>
-<h1> Lékárnička Game: hrát </h1>
-<p id="my_name">načítám jméno...</p>
+<h1> LékárničkaGame </h1>
+<p id="my_name" style="display: none">načítám jméno...</p>
 
 <div id="game_none" style="display: none">
-    <p id="game_none_p">Žádná hra není. Počkej zde a možná se dočkáš?</p>
+    <p id="game_none_p">Žádná hra právě neprobíhá. Můžeš zde počkat na hru, nebo se <a href="/">vrátit</a>.</p>
 </div>
 
 <div id="game_in_lobby" style="display: none">
-    <p id="game_in_lobby_p">Čeká se na start hry...</p>
     <p id="game_in_lobby_p_2">Počet hráčů: načítám...</p>
 
-    <ul id="lobby_list">
+    <ol id="lobby_list">
 <!--        list of players      -->
-    </ul>
+    </ol>
 
+
+    <p id="game_in_lobby_p">Hra brzy začne...</p>
     <form>
         <button id="lobby_quit" type="submit" formaction="/">Odejít</button>
     </form>
@@ -90,23 +92,24 @@
 </div>
 
 <div id="game_eval" style="display: none">
-    <p id="eval_p">Čas skončil!</p>
-    <p>(zatím nic?)</p>
+    <p id="eval_p">Čas pro vybírání je u konce! Sleduj nyní vedoucího, ten vyhodnotí, jak se vám dařilo.</p>
+    <p id="eval_p-2">Zde se pak objeví tvoje výsledky.</p>
+<!--    <p>(zatím nic?)</p>-->
 </div>
 
 <div id="game_post" style="display: none">
-    <p id="game_post_p">Takhle jsi dopadl...</p>
-    <form>
-        <button id="feedback_form_b" type="submit" formaction="/">Dát zpětnou vazbu (TODO)</button>
+    <p id="game_post_p"><i>V budoucnosti se zde objeví přehled, co jsi označil správně, co špatně a na co jsi zapomněl.</i></p>
+    <form class="the-end">
+        <button id="feedback_form_b" type="submit" formaction="/" disabled><i>Dát zpětnou vazbu (TODO)</i></button>
     </form>
 
-    <form>
-        <button id="save_results_b" type="submit" formaction="/">Uložit výsledky (TODO)</button>
+    <form class="the-end">
+        <button id="save_results_b" type="submit" formaction="/" disabled><i>Uložit výsledky (TODO)</i></button>
     </form>
 
-    <form>
-        <button id="go_back_b" type="submit" formaction="/">Opustit hru</button>
-    </form>
+<!--    <form>-->
+<!--        <button id="go_back_b" type="submit" formaction="/">Opustit hru</button>-->
+<!--    </form>-->
 
 </div>
 

@@ -31,7 +31,7 @@ socket.on('e_state', async (state) => {
     status_p.innerText = game_status_text(state);
 
     //
-    el("player-list").innerHTML = player_list_string(state);
+    el("player-list").innerHTML = player_list_string(state, true);
 
     player_button.disabled  = !(state["phase"] === game_in_lobby);
     host_button.disabled  = !(state["phase"] === game_none);

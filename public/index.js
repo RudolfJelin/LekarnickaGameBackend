@@ -30,7 +30,7 @@ socket.on('e_state', async (state) => {
     // update status
     status_p.innerText = game_status_text(state);
 
-    player_button.disabled  = !(state["phase"] === game_in_lobby || state["phase"] === game_none);
+    player_button.disabled  = !(state["phase"] === game_in_lobby || state["phase"] === game_ingame);
     host_button.disabled  = !(state["phase"] === game_none);
 });
 

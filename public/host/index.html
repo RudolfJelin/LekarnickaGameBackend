@@ -7,27 +7,35 @@
 
 </head>
 
-<body>
+<body class="player-body">
 
-<form>
-    <button id="home" type="submit" formaction="/">🏠</button>
-</form>
-<h1> Lékárnička Game: vedoucí </h1>
+
+<div class="top-bar">
+    <form>
+        <button id="home" type="submit" formaction="/">🏠</button>
+    </form>
+    <h1> LékárničkaGame </h1>
+</div>
 
 <!-- content according to drawings -->
 
 <div id="game_none" style="display: none">
+
+    <p id="yapping">Jako vedoucí můžeš vytvořit novou hru. Tuto obrazovku sdílej na projektoru.</p>
+    <p id="yapping-2"><i>V budoucnu tu bude možnost si seznam předmětů a možná i zadání podle libosti.</i></p>
 <!--    button -->
     <button id="new_game_b" onclick="newGameAsHost()" >Nová veřejná hra</button>
 
 </div>
 
 <div id="game_in_lobby" style="display: none">
-    <p id="lobby_host_p">Spusť hru, až se všichni připojí.</p>
+    <p id="yapping-4">Sestavte týmy velikosti 1-4 osoby.</p>
     <p id="lobby_host_p_2">Hráčů připojeno: načítám...</p>
-    <ul id="player_list_host">
+    <ol id="player_list_host">
 
-    </ul>
+    </ol>
+<!--    <br>-->
+    <p id="lobby_host_p">Spusť hru, až se všichni připojí.</p>
 
     <button id="start_game_b" onclick="startGameAsHost()" >Začít hru</button>
 
@@ -36,29 +44,35 @@
 <div id="game_ingame" style="display: none">
 
     <p id="game_host_p">Zadání: skládáte lékárničku na jednodenní výlet s dětmi do Brd.</p>
+    <p id="game_host_p-2">Vyberte na svém zařízení všechny položky, které byste si dali do lékárničky.</p>
+    <p id="yapping-3"><i>V budoucnu se zde možná objeví nastavitelný časovač</i></p>
+
+    <br>
     <button id="eval_game_b" onclick="moveToEvalAsHost()" >Vyhodnotit hru</button>
 
 </div>
 
 <div id="game_eval" style="display: none">
 
-    <p id="evaluation_host_p">Lékárnička: vyhodnocení</p>
+    <p id="evaluation_host_p">Vyhodnocení předmětů lékárničky podle četnosti vybrání.</p>
+    <p id="yapping-5"><i>V budoucnu zde bude prostor pro lektora projít odpovědi a dát zpětnou vazbu.</i></p>
 
     <p id="mock_eval_p" style="display: none">Tohle je placeholder pro evaluační logiku.</p>
     <ul id="result_eval_ul">
 
     </ul>
 
-
+    <hr>
+    <p id="yapping-6">Ukončením hry se přepošlou výsledky všem hráčům.</p>
     <button id="end_game_b" onclick="endGameAsHost()" >Ukončit hru</button>
 
 </div>
 
 <div id="game_post" style="display: none">
 
-    <p id="postgame_host_p">Konec hry. Svůj výsledek si můžete stáhnout.</p>
+    <p id="postgame_host_p">Konec hry. Svůj výsledek si můžete stáhnout na vašich zařízeních.</p>
 
-    <button id="the_end_b" onclick="returnToBeginning()" >Konec</button>
+<!--    <button id="the_end_b" onclick="returnToBeginning()" >Odejít</button>-->
 </div>
 
 
