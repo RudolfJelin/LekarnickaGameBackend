@@ -22,7 +22,7 @@
 <div id="game_none" style="display: none">
 
     <p id="yapping">Jako vedoucí můžeš vytvořit novou hru. Tuto obrazovku sdílej na projektoru.</p>
-    <p id="yapping-2"><i>V budoucnu tu bude možnost si seznam předmětů a možná i zadání podle libosti.</i></p>
+    <p id="yapping-2"><i>V budoucnu tu bude možnost upravit si seznam předmětů a možná i zadání podle libosti.</i></p>
 <!--    button -->
     <button id="new_game_b" onclick="newGameAsHost()" >Nová veřejná hra</button>
 
@@ -67,6 +67,69 @@
     <hr>
 
 <!--    zde: nová varianta :) -->
+    <main class="player-main-2">
+        <p id="player-status-bar">Načítám status text...</p>
+        <div class="input-container-2">
+            <article class="host-eval-radio">
+                <label for="only-marked-toggle">Jen ohodnocené</label>
+                <input type="checkbox" id="only-marked-toggle" onchange="" >
+<!--            </article>-->
+
+<!--            <article>-->
+                <br />
+                <label for="only-unmarked-toggle">Jen neohodnocené</label>
+                <input type="checkbox" id="only-unmarked-toggle" onchange="" >
+            </article>
+
+            <article class="host-eval-radio">
+                <label for="only-correct-toggle">Jen správné</label>
+                <input type="checkbox" id="only-correct-toggle" onchange="" >
+<!--            </article>-->
+
+<!--            <article>-->
+                <br />
+                <label for="only-situational-toggle">Jen ty co jsou případ od případu</label>
+                <input type="checkbox" id="only-situational-toggle" onchange="" >
+<!--            </article>-->
+
+<!--            <article>-->
+                <br />
+                <label for="only-optional-toggle">Jen volitelné</label>
+                <input type="checkbox" id="only-optional-toggle" onchange="" >
+<!--            </article>-->
+
+<!--            <article>-->
+                <br />
+                <label for="only-wrong-toggle">Jen špatné</label>
+                <input type="checkbox" id="only-wrong-toggle" onchange="" >
+            </article>
+
+            <article class="host-eval-radio">
+                <label for="only-notreplied-toggle">Jen nikým nezvolené</label>
+                <input type="checkbox" id="only-notreplied-toggle" onchange="" >
+<!--            </article>-->
+
+<!--            <article>-->
+                <br />
+                <label for="only-replied-toggle">Jen ty, které někdo odpověděl</label>
+                <input type="checkbox" id="only-replied-toggle" onchange="" >
+            </article>
+
+        </div>
+        <div class="player-items" id="article-container">
+            <article class="player-article">
+                Načítám obsah...
+                <button>Pridat</button>
+            </article>
+            <article class="player-article">
+                Jestli tohle čteš, něco je špatně.
+                <button>Pridat</button>
+            </article>
+        </div>
+    </main>
+
+
+
 
     <hr>
     <p id="yapping-6">Ukončením hry se přepošlou výsledky všem hráčům.</p>

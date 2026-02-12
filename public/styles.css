@@ -39,6 +39,16 @@ h1 {
     max-height: 95vh;
 }
 
+.host-main {
+    margin: auto;
+    width: 90vw;
+
+    display: grid;
+    grid-template-rows: 9rem 1fr;
+
+    max-height: 95vh;
+}
+
 .player-items {
     overflow-y: auto;
 }
@@ -87,4 +97,17 @@ button{
 #emergency-controls {
     margin-block: 2rem;
     font-size: 0.8rem;
+}
+
+.input-container-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+
+    margin-block: 0.5rem;
+    padding: 0.5rem;
+}
+
+.host-eval-radio {
+    /*display: grid;*/
+    /*!*grid-template-columns: 1fr 1fr;*!*/
 }
