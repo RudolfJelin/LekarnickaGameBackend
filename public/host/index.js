@@ -55,12 +55,12 @@ socket.on('e_state', async (state) => {
 
 
 
-        el("correct_score").innerText = `Správné předměty označny: ${stats.correct_score}%`;
-        el("conditional_score").innerText = `Situační předměty označny: ${stats.conditional_score}%`;
+        el("correct_score").innerText = `${stats.correct_score}% správných předmětů označeno;`;
+        el("conditional_score").innerText = `${stats.conditional_score}% předmětů, kde záleží na okolnostech;`;
         // el("optional_score").innerText = `Volitelné předměty označny: ${stats.optional_score}%`; // nás nezajímá, duh
-        el("wrong_score").innerText = `Nesprávné předměty označny: ${stats.wrong_score}%`;
+        el("wrong_score").innerText = `ale ${stats.wrong_score}% nesprávných předmětů.`;
 
-        el("postgame_host_p_2").innerText = `Vaše skóre: ${stats.final_score}`
+        el("postgame_host_p_2").innerText = `Vaše skóre: ${Math.floor(stats.final_score)}/100`;
 
     }
 });
@@ -279,11 +279,12 @@ function filter_shown_items(){
 
 }
 
+
 // a checkbox has been toggled
-function onEvaluationButton(button, i, option){
+function onEvaluationButton(button, i, item_decl){
 
     // save the new information
-    items_data[i].item.declared = option;
+    items_data[i].item.declared = item_decl;
 
 
     // style
@@ -293,38 +294,7 @@ function onEvaluationButton(button, i, option){
 
     // style the article
 
-    switch(option){
-        case item_undeclared:
-            item_article.style.backgroundColor = "lightgray";
-            item_article.style.borderColor = "#000000";
-            item_article.style.borderStyle = "solid";
-            item_article.style.borderWidth = "0";
-            break;
-        case item_right:
-            item_article.style.backgroundColor = "#b0ff8e";
-            item_article.style.borderColor = "#127700";
-            item_article.style.borderStyle = "solid";
-            item_article.style.borderWidth = "2px";
-            break;
-        case item_conditional:
-            item_article.style.backgroundColor = "#c8eab8";
-            item_article.style.borderColor = "#3d7700";
-            item_article.style.borderStyle = "dashed";
-            item_article.style.borderWidth = "2px";
-            break;
-        case item_optional:
-            item_article.style.backgroundColor = "#ffbd8e";
-            item_article.style.borderColor = "#773f00";
-            item_article.style.borderStyle = "solid";
-            item_article.style.borderWidth = "2px";
-            break;
-        case item_wrong:
-            item_article.style.backgroundColor = "#ff8e8e";
-            item_article.style.borderColor = "#770000";
-            item_article.style.borderStyle = "solid";
-            item_article.style.borderWidth = "2px";
-            break;
-    }
+    style_article_according_to_declaration(item_decl, item_article);
 
 
     // trigger redraw: TODO this is not needed right?

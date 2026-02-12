@@ -140,3 +140,30 @@ function previous_phase(phase){
             return game_none;
     }
 }
+
+
+
+
+function style_article_according_to_declaration(item_decl, item_article) {
+
+    item_article.classList.remove("item-undeclared", "item-right", "item-conditional", "item-optional", "item-wrong");
+    item_article.classList.add(item_decl);
+
+    // switch (item_decl) {
+    //     case item_undeclared:
+    //         item_article.classList.add("item-undeclared");
+    //         break;
+    //     case item_right:
+    //         item_article.classList.add("item-right");
+    //         break;
+    //     case item_conditional:
+    //         item_article.classList.add("item-conditional");
+    //         break;
+    //     case item_optional:
+    //         item_article.classList.add("item-optional");
+    //         break;
+    //     case item_wrong:
+    //         item_article.classList.add("item-wrong");
+    //         break;
+    // }
+}
