@@ -83,3 +83,8 @@ h1 {
 button{
     padding: 0.2rem;
 }
+
+#emergency-controls {
+    margin-block: 2rem;
+    font-size: 0.8rem;
+}

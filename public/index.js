@@ -32,6 +32,12 @@ socket.on('e_state', async (state) => {
 
     player_button.disabled  = !(state["phase"] === game_in_lobby || state["phase"] === game_ingame);
     host_button.disabled  = !(state["phase"] === game_none);
+
+    // emergency controls iff ONGOING game with NO host
+    let show_emergency = state.phase !== game_none && count_players(state, client_host) === 0;
+    el("emergency-controls").style.display = show_emergency ? "block" : "none";
+
+
 });
 
 function playAsPlayer(){
@@ -42,3 +48,7 @@ function playAsHost(){
     window.location.href = "/host";
 }
 
+
+function cancelAbandoned(){
+    socket.emit("e_admin_reset");
+}

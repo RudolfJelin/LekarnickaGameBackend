@@ -16,6 +16,12 @@
 <button id="asPlayer" onclick="playAsPlayer()" disabled >Hrát</button>
 <button id="asHost" onclick="playAsHost()" disabled>Založit novou hru</button>
 
+<div id="emergency-controls" style="display:none">
+    <p><i>Vypadá to, že hra nemá vedoucího!</i></p>
+    <button id="emergency-start-hosting" onclick="playAsHost()" >Převzít roli vedoucího</button>
+    <button id="emergency-cancel-game" onclick="cancelAbandoned()">Zrušit probíhající hru</button>
+</div>
+
 
 <div id="debug" style="display: none">
 <!-- TODO conditional links to host, play game or administrate site -->

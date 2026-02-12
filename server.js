@@ -21,12 +21,19 @@ const client_player = "client_player";
 const client_admin = "client_admin";
 const client_menu = "client_menu";
 
+const item_right = "item_right";
+const item_conditional = "item_conditional";
+const item_optional = "item_optional";
+const item_wrong = "item_wrong";
+const item_undeclared = "item_undeclared";
+
 const all_phases = [game_none, game_in_lobby, game_ingame, game_eval, game_post];
 
 const default_game_len_seconds = 10;
 
 // each item has one main name and can have several "/"-delimited variations in the name
-const items = ["obvaz", "ibuprofen", "nůžky", "aktivní uhlí/živočišné uhlí"]
+// const items = ["obvaz", "ibuprofen", "nůžky", "aktivní uhlí/živočišné uhlí"]
+const items = load_first_aid_items(); // TODO verify
 
 const default_state = {
     "phase": game_none,
@@ -47,10 +54,36 @@ function copy(object) {
 }
 
 function load_first_aid_items(){
-    const string = fs.readFileSync('./myFile', 'utf8')
 
-    // split into lines
-    // todo
+    // load and split into lines
+    const string = fs.readFileSync('./lekarnicka.txt', 'utf8').split(/\r?\n/)
+
+    console.log("string", string);
+
+    // filter out comments and empty lines
+    let result = string.filter(line => {
+        console.log(line, line[0])
+        if (line === undefined || line.length === 0){
+            return false;
+        }
+
+        line = line.trim();
+
+        if (line[0] === '#') {
+            return false;
+        }
+
+        if (line.trim().length <= 1){
+            return false;
+        }
+
+        return true;
+    });
+
+    // trim results
+    result = result.map(s => s.trim());
+
+    return result;
 }
 
 function previous_phase(phase){
@@ -150,7 +183,7 @@ function onAllPlayersSubmittedSelections() {
         state.game_results.push({
             "item": item,
             "percent": (count * 100.0 / num_players),
-            "declared": "undeclared"
+            "declared": item_undeclared
         });
     })
 
@@ -246,12 +279,12 @@ io.on('connection', (socket) => {
     });
 
     socket.on("e_requested_item_list", ()=>{
-        io.emit("e_list_of_items", items);
+        io.emit("e_list_of_items", items); // raw items
     });
 
     socket.on("e_selected_items", (selected_items) => {
 
-        console.log("selected items", JSON.stringify(selected_items));
+        // console.log("selected items", JSON.stringify(selected_items));
 
         // check if player exists
         if (!(socket.id in state.player_data)){

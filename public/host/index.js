@@ -143,4 +143,9 @@ function returnToBeginning(){
     window.location.href = "/";
 }
 
+function cancelGame(){
+    socket.emit("e_admin_reset");
+    quit();
+}
+
 
