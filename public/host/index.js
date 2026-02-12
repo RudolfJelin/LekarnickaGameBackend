@@ -57,7 +57,7 @@ socket.on('e_state', async (state) => {
 
         el("correct_score").innerText = `Správné předměty označny: ${stats.correct_score}%`;
         el("conditional_score").innerText = `Situační předměty označny: ${stats.conditional_score}%`;
-        el("optional_score").innerText = `Volitelné předměty označny: ${stats.optional_score}%`;
+        // el("optional_score").innerText = `Volitelné předměty označny: ${stats.optional_score}%`; // nás nezajímá, duh
         el("wrong_score").innerText = `Nesprávné předměty označny: ${stats.wrong_score}%`;
 
         el("postgame_host_p_2").innerText = `Vaše skóre: ${stats.final_score}`

@@ -250,10 +250,10 @@ function calculate_post_game_statistics(){
     });
 
     // tackle zero division
-    if (isNaN(stats.correct_score)){stats.correct_score = 100;}
-    if (isNaN(stats.conditional_score)){stats.conditional_score = 100;}
-    if (isNaN(stats.optional_score)){stats.optional_score = 100;}
-    if (isNaN(stats.wrong_score)){stats.wrong_score = 100;}
+    if (right_count === 0){stats.correct_score = 100;}
+    if (conditional_count === 0){stats.conditional_score = 100;}
+    if (optional_count === 0){stats.optional_score = 100;}
+    if (wrong_undeclared_count){stats.wrong_score = 0;}
 
     // overall score (optional has zero weight, cond has half weight)
     stats.final_score = (stats.correct_score + stats.conditional_score / 2 + (100 - stats.wrong_score)) / 2.5;
