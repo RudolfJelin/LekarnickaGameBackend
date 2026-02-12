@@ -41,7 +41,8 @@ const default_state = {
     "players": [], // list of player IDs
     "player_data": {}, // actual player data
     "game_results_calculated": false,
-    "game_results": [] // for each item: name, %, right/conditional/optional/wrong/undeclared
+    "game_results": [], // for each item: name, %, right/conditional/optional/wrong/undeclared
+    "stats": {}
 }
 
 let state = copy(default_state);
@@ -62,7 +63,7 @@ function load_first_aid_items(){
 
     // filter out comments and empty lines
     let result = string.filter(line => {
-        console.log(line, line[0])
+        // console.log(line, line[0])
         if (line === undefined || line.length === 0){
             return false;
         }
@@ -200,6 +201,94 @@ function onAllPlayersSubmittedSelections() {
 }
 
 
+// post game statistics
+
+function count_players(client_type = client_player){
+    return state.players.filter(id => state.player_data[id].client_type === client_type).length
+}
+
+function calculate_post_game_statistics(){
+    // save statistics into State
+    // we can work with:
+    // list of things players chose: state.players --> state.player_data[id].selected_items is a list of selected items
+    // list of evaluations: state.game_results is a list of {item, percent, declared (as what)}
+
+    // global accuracy as proof of concept
+
+    let stats = {};
+    let item_count = state.game_results.length;
+
+    // count how many items of each category
+    let right_count = state.game_results.filter(item => (item.declared === item_right)).length;
+    let conditional_count = state.game_results.filter(item => (item.declared === item_conditional)).length;
+    let optional_count = state.game_results.filter(item => (item.declared === item_optional)).length;
+    let wrong_undeclared_count = state.game_results.filter(item => (item.declared === item_undeclared || item.declared === item_wrong)).length;
+
+
+    // how many % on average across these items
+    stats.correct_score = 0;
+    stats.conditional_score = 0;
+    stats.optional_score = 0;
+    stats.wrong_score = 0;
+
+    state.game_results.forEach(item => {
+        switch (item.declared) {
+            case item_right:
+                stats.correct_score += item.percent / right_count;
+                break;
+            case item_conditional:
+                stats.conditional_score += item.percent / conditional_count;
+                break;
+            case item_optional:
+                stats.optional_score += item.percent / optional_count;
+                break;
+            case item_wrong:
+            case item_undeclared:
+                stats.wrong_score += item.percent / wrong_undeclared_count;
+                break;
+        }
+    });
+
+    // tackle zero division
+    if (isNaN(stats.correct_score)){stats.correct_score = 100;}
+    if (isNaN(stats.conditional_score)){stats.conditional_score = 100;}
+    if (isNaN(stats.optional_score)){stats.optional_score = 100;}
+    if (isNaN(stats.wrong_score)){stats.wrong_score = 100;}
+
+    // overall score (optional has zero weight, cond has half weight)
+    stats.final_score = (stats.correct_score + stats.conditional_score / 2 + (100 - stats.wrong_score)) / 2.5;
+
+    state.stats = stats;
+
+    // total.items_x_players = count_players(state, client_player) * items.length;
+    //
+    // total.selected_right = 0;
+    // total.unselected_right = 0;
+    // total.selected_conditional = 0;
+    // total.unselected_conditional = 0;
+    // total.selected_optional = 0;
+    // total.unselected_optional = 0;
+    // total.selected_wrong = 0;
+    // total.unselected_wrong = 0;
+    //
+    // // iterate over all items
+    // state.player_data.game_results
+    //
+    //
+    //
+    // total.selected = total.selected_right + total.selected_conditional + total.selected_optional + total.unselected_wrong;
+    // total.unselected = total.unselected_right + total.unselected_conditional + total.unselected_optional + total.unselected_wrong;
+    // total.right = total.selected_right + total.unselected_right;
+    // total.conditional = total.selected_conditional + total.unselected_conditional;
+    // total.optional = total.selected_optional + total.unselected_optional;
+    // total.wrong = total.selected_wrong + total.unselected_wrong;
+
+}
+
+
+
+
+
 // connection code
 
 
@@ -321,9 +410,13 @@ io.on('connection', (socket) => {
 
     socket.on("e_host_finished_evaluation", (results)=>{
        // save results, change phase, send to all.
-        console.log("results", JSON.stringify(results));
+       //  console.log("results", JSON.stringify(results));
 
         state.game_results = results;
+
+
+        // WAIT! I NOW HAVE ALL THE INFORMATION ABOUT EVERYONE WHATSOEVER
+        calculate_post_game_statistics();
 
         state.phase = game_post;
         update_state_for_all();
@@ -338,6 +431,10 @@ app.use(express.static('public'));
 server.listen(3000, () => {
     console.log('server running at http://localhost:3000');
 });
+
+
+
+
 
 
 

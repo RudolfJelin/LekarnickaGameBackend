@@ -46,6 +46,23 @@ socket.on('e_state', async (state) => {
     if (state.phase === game_eval && state.game_results_calculated){
         show_player_response_results(state.game_results)
     }
+
+    // update stats
+    if (state.phase === game_post){
+
+        let stats = state.stats;
+        // let stats_ul = el("postgame_host_ul");
+
+
+
+        el("correct_score").innerText = `Správné předměty označny: ${stats.correct_score}%`;
+        el("conditional_score").innerText = `Situační předměty označny: ${stats.conditional_score}%`;
+        el("optional_score").innerText = `Volitelné předměty označny: ${stats.optional_score}%`;
+        el("wrong_score").innerText = `Nesprávné předměty označny: ${stats.wrong_score}%`;
+
+        el("postgame_host_p_2").innerText = `Vaše skóre: ${stats.final_score}`
+
+    }
 });
 
 // called when server finishes calculating most selected items

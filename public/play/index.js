@@ -80,7 +80,7 @@ socket.on('e_state', async (state) => {
     if (state.phase === game_post){
 
         // write out everything
-        el("debug-results").innerText = JSON.stringify(state.game_results);
+        el("debug-results").innerText = JSON.stringify(state);
 
         // game ended --> disconnect to prevent getting unwanted updates
         socket.disconnect();
