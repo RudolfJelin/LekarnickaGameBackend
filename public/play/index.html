@@ -8,10 +8,10 @@
 
 <body class="player-body">
 <!-- the infamous GAMER BODY -->
-<form>
-    <button id="home" type="submit" formaction="/">🏠</button>
-</form>
-<h1> LékárničkaGame </h1>
+<!--<form>-->
+<!--    <button id="home" type="submit" formaction="/">🏠</button>-->
+<!--</form>-->
+<!--<h1> LékárničkaGame </h1>-->
 <p id="my_name" style="display: none">načítám jméno...</p>
 
 <div id="game_none" style="display: none">
@@ -33,17 +33,16 @@
 </div>
 
 <div id="game_ingame" style="display: none">
-    <p id="game_p"><i>Vyberte položky</i></p>
     <main class="player-main">
         <div class="input-container">
             <div class="player-input-div">
                 <div id="player-search-div" class="player-search-row-div">
+                    <p id="game_p">Vyberte položky</p>
                     <label for="player-input-search"></label><input type="text" id="player-input-search" class="player-input-search" oninput="onSearchEdit(this.value);">
                 </div>
                 <div id="player-selected-div" class="player-search-row-div">
                     <!--                toggle to filter selected only-->
 <!--                    <button id="player-selected-button">Jen vybrané</button>-->
-                    <label for="only-selected-toggle">Jen vybrané</label><input type="checkbox" id="only-selected-toggle" onchange="toggleSelectedOnly(this)" >
 
                 </div>
 <!--                <div id="player-clear-div" class="player-search-row-div">-->
@@ -51,6 +50,9 @@
 <!--                    <button id="player-clear-button">Vymazat hledání</button>-->
 <!--                </div>-->
             </div>
+
+            <label for="only-selected-toggle">Jen vybrané</label>
+            <input type="checkbox" id="only-selected-toggle" onchange="toggleSelectedOnly(this)" >
             <p id="player-status-bar">Načítám status text...</p>
         </div>
         <div class="player-items" id="article-container">
@@ -107,9 +109,9 @@
         <button id="save_results_b" type="submit" formaction="/" disabled><i>Uložit výsledky (TODO)</i></button>
     </form>
 
-<!--    <form>-->
-<!--        <button id="go_back_b" type="submit" formaction="/">Opustit hru</button>-->
-<!--    </form>-->
+    <form>
+        <button id="go_back_b" type="submit" formaction="/">Opustit hru</button>
+    </form>
 
 </div>
 

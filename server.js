@@ -4,6 +4,7 @@ const express = require('express');
 const { createServer } = require('node:http');
 const { join } = require('node:path');
 const { Server } = require('socket.io');
+const fs = require('fs')
 
 const app = express();
 const server = createServer(app);
@@ -43,6 +44,13 @@ let state_old = "";
 // somehow, it has come to this
 function copy(object) {
     return JSON.parse(JSON.stringify(object));
+}
+
+function load_first_aid_items(){
+    const string = fs.readFileSync('./myFile', 'utf8')
+
+    // split into lines
+    // todo
 }
 
 function previous_phase(phase){

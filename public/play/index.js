@@ -93,10 +93,11 @@ socket.on("e_list_of_items", (items) => {
     items.forEach((item) => {
 
         // spawn an element
-        let article = `<article class="player-article" id="generated-article-${i}">
-            <p id="generated-p-${i}">${item}</p>
-            <input type="checkbox" class="player-article-toggle" id="generated-toggle-${i}" onchange="toggleCheckbox(this, ${i})" >
-        </article>
+        let article = `
+            <article class="player-article" id="generated-article-${i}">
+                <label for="generated-toggle-${i}" class="generated-toggle-label"><p>${item}</p></label>
+                <input type="checkbox" class="player-article-toggle" id="generated-toggle-${i}" onchange="toggleCheckbox(this, ${i})" >
+            </article>
         `
 
         article_container.innerHTML += article;
