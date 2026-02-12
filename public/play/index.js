@@ -188,7 +188,7 @@ function matches_search_query(item_name, query){
         return true;
     }
 
-    if (item_name.includes(query)) {
+    if (item_name.toLowerCase().includes(query.toLowerCase())) {
         return true;
     }
 
@@ -301,7 +301,9 @@ function did_player_select_this(state, item_name){
         my_responses = [];
     }
 
-    return my_responses.some(item => {return item.item === item_name});
+    // console.log("did", JSON.stringify(my_responses), item_name)
+
+    return my_responses.some(item => {return item === item_name});
 }
 
 function sorting_order(state, item_name){
@@ -356,12 +358,16 @@ function display_post_game_stats(state) {
     let added_anything_to_2 = false;
     let added_anything_to_3 = false;
 
+    // console.log("player", socket.id, JSON.stringify(state.player_data))
+
     // loop over items
     state.game_results.forEach(item => {
         // for each item:
         let declared_as = item.declared;
         let was_selected = did_player_select_this(state, item.item);
         let article = generate_article(item.item, declared_as, was_selected);
+
+        // console.log("item", JSON.stringify(item), declared_as, was_selected)
 
         // 'co jsi mel spravne'-part:
         if ((declared_as === item_right && was_selected)
@@ -372,6 +378,7 @@ function display_post_game_stats(state) {
             // spawn an element
             final_main_pt1.innerHTML += article;
             added_anything_to_1 = true;
+            console.log("added to 1", article);
         }
         else if ((declared_as === item_right && !was_selected)
             || (declared_as === item_conditional && !was_selected)){
@@ -442,7 +449,7 @@ ${take_sometimes.join("\n")}
 function download_results(){
     let today = new Date().toISOString().slice(0, 10)
 
-    download(cached_download_string, "text/plain", `lekarnickaGame_vysledky_${today}`);
+    download(cached_download_string, "text/plain", `lekarnickaGame_vysledky_${today}.txt`);
 }
 
 

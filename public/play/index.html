@@ -38,7 +38,7 @@
             <div class="player-input-div">
                 <div id="player-search-div" class="player-search-row-div">
                     <p id="game_p">Vyberte položky</p>
-                    <label for="player-input-search"></label><input type="text" id="player-input-search" class="player-input-search" oninput="onSearchEdit(this.value);">
+                    <label for="player-input-search"></label><input type="text" id="player-input-search" class="player-input-search" placeholder="Vyhledat předměty..." oninput="onSearchEdit(this.value);">
                 </div>
                 <div id="player-selected-div" class="player-search-row-div">
                     <!--                toggle to filter selected only-->
@@ -51,8 +51,8 @@
 <!--                </div>-->
             </div>
 
-            <label for="only-selected-toggle">Jen vybrané</label>
-            <input type="checkbox" id="only-selected-toggle" onchange="toggleSelectedOnly(this)" >
+            <label for="only-selected-toggle" style="display: none;">Jen vybrané</label>
+            <input type="checkbox" id="only-selected-toggle" onchange="toggleSelectedOnly(this)" style="display: none;">
             <p id="player-status-bar">Načítám status text...</p>
         </div>
         <div class="player-items" id="article-container">
