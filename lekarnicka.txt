@@ -5,38 +5,54 @@ obinadlo / elastické obinadlo / elastický obvaz
 náplasti
 dezinfekce / Jodisol / Betadine
 Paralen / Panadol / Paracetamol
-Ibalgin
+Ibalgin / Aspirin
+aktivní uhlí / živočišné uhlí / medicinální uhlí / carbo medicinalis
+kapky do očí / Opthalmo-septonex / borová voda / borovka
+hroznový cukr / rychlý cukr / glukóza
+vazelína / Bepanthen / Panthenol
+pinzeta
+pinzata na klíšťata
+nůžky
 
+# situační
+Epipen
+izotermické fólie
+teploměr
 
 # optional
+Omnifilm/Urgofilm na cívce
+antihistaminika / Zyrtec / Zodac / Xyzal
+zavírací špendlíky
+Smecta / Imodium / Hylak / Enterol
+Kinedryl
+na bolest v krku / Strepfen / Septilen / Strepsils / Tantum Verde / Septolete / Orofar
+sterilní gáza
+plastová stříkačka
 
 
-#    Omnifilm/Urgofilm na cívce
-#
-#    léky
-#
-#        Paralen - 1 plato
-#
-#        Ibalgin - 1 plato
-#
-#        živočišné uhlí - 2 plata
-#
-#        antihistaminika (Zyrtec/Zodac) - 1 plato
-#
-#        kapky do očí (Opthalmo-septonex/borovka)
-#
-#        cucavky na bolest v krku - Tantum Verde
-#        hroznový cukr
-#    vazelína/bepanthen
-#    malá pinzeta
-#    pinzeta na klíšťata
-#    malé nůžky
-#    zavírací špendlíky (několik, různé velikosti)
-#    izotermická folie
-#    teploměr - kdo neumí odhadnout teplotu
-
-nůžky
-škrtidlo
+# NE
+nůž
+přeřezávač bezpečnostních pásů
+hasící přístroj
+defibrilátor / AED
+škrtidlo / zaškrcovadlo
+turniket / tourniquet / taktické zaškrcovadlo / CAT
 ponožky
-teploměr
-Epipen
+Guttalax / Laxygal / glycerinové čípky
+Novikov / Akutol
+Hašlerky
+Jelení lůj
+kapesníky
+tlakový obvaz / obvaz č.3
+anticovid / antikovid
+Hemagel, Flamigel, Betadine mast
+na bolest kloubů / Ibalgin, Dolgit, Voltaren mast
+vitamíny
+rehydratační roztok
+minerálka / Magnesia
+trojcípý šátek
+respirátor
+kartáček na zuby
+poznámkový blok + tužka
+
+
