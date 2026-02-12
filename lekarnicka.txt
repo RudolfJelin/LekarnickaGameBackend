@@ -1,39 +1,42 @@
-﻿# Základní ošetření ran
+﻿# spravné řešení
 
-Sterilní krycí kompresy / sterilní čtverce
-Hotový obvaz s polštářkem / sterilní obvaz
-Elastické obinadlo / pružné obinadlo
-Kohezivní obinadlo / samodržící bandáž
-Náplasti s polštářkem různé velikosti / strip náplasti
-Náplast v roli / leukoplast / Omnifilm
-Hydrokoloidní náplast / náplast na puchýře
-Trojcípý šátek / fixační šátek
-Izotermická fólie / termofólie / záchranná fólie
+rukavice / latexové rukavice / gumové rukavice
+obinadlo / elastické obinadlo / elastický obvaz
+náplasti
+dezinfekce / Jodisol / Betadine
+Paralen / Panadol / Paracetamol
+Ibalgin
 
-# Dezinfekce a hygiena
 
-Dezinfekce na rány / antiseptický roztok (Octenisept, Betadine, Jodisol)
-Dezinfekční ubrousky / alkoholové tampony
-Sterilní fyziologický roztok / NaCl 0,9 % ampule
-Jednorázové rukavice / nitrilové rukavice
-Dezinfekce na ruce / antibakteriální gel
+# optional
 
-# Nástroje
 
-Nůžky zdravotnické se zakulacenou špičkou / malé nůžky
-Pinzeta / kleštičky na třísky
-Karta na klíšťata / háček na klíšťata / pinzeta na klíšťata
-Zavírací špendlíky / spínací špendlíky
-Teploměr digitální / bezkontaktní teploměr
+#    Omnifilm/Urgofilm na cívce
+#
+#    léky
+#
+#        Paralen - 1 plato
+#
+#        Ibalgin - 1 plato
+#
+#        živočišné uhlí - 2 plata
+#
+#        antihistaminika (Zyrtec/Zodac) - 1 plato
+#
+#        kapky do očí (Opthalmo-septonex/borovka)
+#
+#        cucavky na bolest v krku - Tantum Verde
+#        hroznový cukr
+#    vazelína/bepanthen
+#    malá pinzeta
+#    pinzeta na klíšťata
+#    malé nůžky
+#    zavírací špendlíky (několik, různé velikosti)
+#    izotermická folie
+#    teploměr - kdo neumí odhadnout teplotu
 
-# Léky a symptomatická léčba
-
-Paracetamol / Paralen / Panadol
-Ibuprofen / Ibalgin / Nurofen
-Antihistaminikum tablety / cetirizin / Zyrtec / Xyzal
-Aktivní uhlí / carbo medicinalis
-Rehydratační roztok / ORS sáčky / iontový prášek
-Nosní sprej s mořskou vodou / solný nosní sprej
-Oční kapky / umělé slzy / oční výplach
-Gel na popáleniny / panthenol / hydrogel
-Hroznový cukr / glukózové tablety
+nůžky
+škrtidlo
+ponožky
+teploměr
+Epipen
