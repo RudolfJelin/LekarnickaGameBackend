@@ -7,6 +7,7 @@ const socket = io();
 const client_type = "client_host";
 let old_known_phase = null;
 
+let items_data = [];
 
 // render new player data
 function update_player_list(state) {
@@ -47,26 +48,12 @@ socket.on('e_state', async (state) => {
     }
 });
 
-function show_player_response_results(game_results_copy) {
-    // check if is in right phase
-    if (old_known_phase !== game_eval) {
-        console.error("Recieved evaluation command, but not in evaluation phase!");
-        return;
-    }
-
-    // show debug text
-    el("mock_eval_p").innerText = `Výsledky: ${JSON.stringify(game_results_copy)}`
-
-    // show debug list
-    el("result_eval_ul").innerHTML = host_results_string(game_results_copy);
-}
-
 // called when server finishes calculating most selected items
-socket.on('e_game_stats_calculated', (game_results_copy)=>{
+socket.on('e_game_stats_calculated', (game_results_copy)=> {
     show_player_response_results(game_results_copy);
 });
 
-socket.on('e_sorry_already_exists_host', async ()=>{
+socket.on('e_sorry_already_exists_host', async ()=> {
     await swal({
         title: "Nejde to :(",
         text: "Někdo už tu je jako vedoucí hry",
@@ -130,12 +117,19 @@ function startGameAsHost(){
 
 }
 
+// host ends selection phase, moves to evaluation
 function moveToEvalAsHost(){
     socket.emit('e_host_req_next_phase', game_eval);
 }
 
+// host ends evaluation phase
 function endGameAsHost(){
-    socket.emit('e_host_req_next_phase', game_post);
+    // socket.emit('e_host_req_next_phase', game_post);
+
+    let result = items_data.map(item => {return item.item});
+
+    // send result back
+    socket.emit("e_host_finished_evaluation", result);
 }
 
 function returnToBeginning(){
@@ -147,5 +141,180 @@ function cancelGame(){
     socket.emit("e_admin_reset");
     quit();
 }
+
+
+// evaluation logic
+
+
+
+function show_player_response_results(game_results_copy) {
+    // check if is in right phase
+    if (old_known_phase !== game_eval) {
+        console.error("Recieved evaluation command, but not in evaluation phase!");
+        return;
+    }
+
+    // show debug text
+    el("mock_eval_p").innerText = `Výsledky: ${JSON.stringify(game_results_copy)}`
+
+    // show debug list
+    el("result_eval_ul").innerHTML = host_results_string(game_results_copy);
+
+    // now, for the real shit
+    // generate elements
+
+    let article_container = el("article-container");
+    article_container.innerHTML = "";
+    items_data = [];
+
+    // populate list
+    let i = 0;
+    game_results_copy.forEach((item) => {
+
+        // spawn an element
+        let article = `
+            <article class="host-article" id="generated-article-${i}">
+                <p>${item.percent}%</p>
+                <label for="generated-toggle-${i}" class="generated-toggle-label"><p>${item.item}</p></label>
+                
+                <div>
+                    <div id="generated-options-${i}" class="div-options-buttons">
+                        <button id="generated-button-correct-${i}" onclick="onEvaluationButton(this, ${i}, item_right)">Nutný obsah ✅️️</button>
+                        <button id="generated-button-situational-${i}" onclick="onEvaluationButton(this, ${i}, item_conditional)">Podle situace 🧐</button>
+                        <button id="generated-button-optional-${i}" onclick="onEvaluationButton(this, ${i}, item_optional)">Zvažte nebrat ⚖️</button>
+                        <button id="generated-button-wrong-${i}" onclick="onEvaluationButton(this, ${i}, item_wrong)">Ne ❌️</button>
+                    </div>
+                    
+                    <div id="generated-deselect-div-${i}" class="div-deselect-button">
+                        <button id="generated-button-deselect-${i}" onclick="onEvaluationButton(this, ${i}, item_undeclared)">Zrušit označení</button>
+                    </div>
+                </div>
+            </article>
+        `
+
+        article_container.innerHTML += article;
+
+        // keep track
+        items_data.push({
+            "id": i,
+            "item": item,
+
+            "article-id": `generated-article-${i}`,
+
+            "correct-id": `generated-button-correct-${i}`,
+            "situational-id": `generated-button-situational-${i}`,
+            "optional-id": `generated-button-optional-${i}`,
+            "wrong-id": `generated-button-wrong-${i}`,
+            "deselect-id": `generated-button-deselect-${i}`,
+
+            "options-div-id": `generated-options-${i}`,
+            "deselect-div-id": `generated-deselect-div-${i}`,
+        });
+
+        i++;
+    });
+
+
+    // trigger a cleanup (BIG one, just to be EXTRA sure)
+    resetSearch();
+}
+
+// resets all buttons, including the ones in articles, to default state
+function resetSearch(){
+    // TODO: reset all buttons and checkbox panel
+
+    // reset checkbox panel (todo)
+    // options visible and reset option invisible
+
+    // effectively, shows all items
+    filter_shown_items();
+}
+
+// filters all shown items
+function filter_shown_items(){
+    items_data.forEach(item => {
+        // for each item:
+
+        // decide whether to show it
+        let show_it = true;
+
+        // TODO: filter
+        // if (filter_only_selected && item.selected === false){
+        //     show_it = false;
+        // }
+
+        // // calculate variables
+        // if (true) { total++; }
+        // if (show_it){ total_visible++; }
+        // if (item.selected){ total_selected++; }
+        // if (show_it && item.selected){ total_selected_and_visible++; }
+
+        // update visibility
+        el(item["article-id"]).style.display = show_it ? "grid" : "none";
+    });
+
+    // update status text
+    // // noinspection UnnecessaryLocalVariableJS
+    // let status_text = `Zobrazeno ${total_visible} z ${total} položek celkem,\n`
+    //     + `(${total_selected_and_visible} z ${total_selected} vybraných položek)`;
+    //
+    // el("player-status-bar").innerText = status_text;
+
+}
+
+// a checkbox has been toggled
+function onEvaluationButton(button, i, option){
+
+    // save the new information
+    items_data[i].item.declared = option;
+
+
+    // style
+
+    let item_data = items_data[i];
+    let item_article = el(items_data[i]['article-id']);
+
+    // style the article
+
+    switch(option){
+        case item_undeclared:
+            item_article.style.backgroundColor = "lightgray";
+            item_article.style.borderColor = "#000000";
+            item_article.style.borderStyle = "solid";
+            item_article.style.borderWidth = "0";
+            break;
+        case item_right:
+            item_article.style.backgroundColor = "#b0ff8e";
+            item_article.style.borderColor = "#127700";
+            item_article.style.borderStyle = "solid";
+            item_article.style.borderWidth = "2px";
+            break;
+        case item_conditional:
+            item_article.style.backgroundColor = "#c8eab8";
+            item_article.style.borderColor = "#3d7700";
+            item_article.style.borderStyle = "dashed";
+            item_article.style.borderWidth = "2px";
+            break;
+        case item_optional:
+            item_article.style.backgroundColor = "#ffbd8e";
+            item_article.style.borderColor = "#773f00";
+            item_article.style.borderStyle = "solid";
+            item_article.style.borderWidth = "2px";
+            break;
+        case item_wrong:
+            item_article.style.backgroundColor = "#ff8e8e";
+            item_article.style.borderColor = "#770000";
+            item_article.style.borderStyle = "solid";
+            item_article.style.borderWidth = "2px";
+            break;
+    }
+
+
+    // trigger redraw: TODO this is not needed right?
+    filter_shown_items();
+}
+
+
+
 
 

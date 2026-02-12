@@ -11,6 +11,13 @@ const client_player = "client_player";
 const client_admin = "client_admin";
 const client_menu = "client_menu";
 
+
+const item_right = "item_right";
+const item_conditional = "item_conditional";
+const item_optional = "item_optional";
+const item_wrong = "item_wrong";
+const item_undeclared = "item_undeclared";
+
 function el(e){
     return document.getElementById(e);
 }

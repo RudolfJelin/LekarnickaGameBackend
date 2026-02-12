@@ -19,7 +19,6 @@ let search_query = "";
 let filter_only_selected = false;
 
 
-
 // render new player data
 function update_player_list(state) {
     el("game_in_lobby_p_2").innerText = `Hráčů připojeno: ${count_players(state)}`
@@ -76,6 +75,15 @@ socket.on('e_state', async (state) => {
     if (state['phase'] !== old_known_phase) {
         update_phase(state['phase'], old_known_phase);
         old_known_phase = state['phase'];
+    }
+
+    if (state.phase === game_post){
+
+        // write out everything
+        el("debug-results").innerText = JSON.stringify(state.game_results);
+
+        // game ended --> disconnect to prevent getting unwanted updates
+        socket.disconnect();
     }
 
     update_player_list(state);
@@ -256,8 +264,7 @@ function update_phase(new_phase, old_phase) {
     // phase-specific behavior
 
     if (new_phase === game_post){
-        // game ended --> disconnect to prevent getting unwanted updates
-        socket.disconnect();
+        // MOVED to socket.on(e_state)
     }
 
     else if (new_phase === game_eval){

@@ -56,9 +56,9 @@ function copy(object) {
 function load_first_aid_items(){
 
     // load and split into lines
-    const string = fs.readFileSync('./lekarnicka.txt', 'utf8').split(/\r?\n/)
+    const string = fs.readFileSync('./lekarnicka_test.txt', 'utf8').split(/\r?\n/)
 
-    console.log("string", string);
+    // console.log("string", string);
 
     // filter out comments and empty lines
     let result = string.filter(line => {
@@ -317,6 +317,18 @@ io.on('connection', (socket) => {
         // reset and update
         reset_all();
         io.emit("e_sorry_game_was_cancelled_by_force");
+    });
+
+    socket.on("e_host_finished_evaluation", (results)=>{
+       // save results, change phase, send to all.
+        console.log("results", JSON.stringify(results));
+
+        state.game_results = results;
+
+        state.phase = game_post;
+        update_state_for_all();
+
+
     });
 });
 
