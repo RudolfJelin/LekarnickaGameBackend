@@ -18,6 +18,8 @@ let items_data = [];
 let search_query = "";
 let filter_only_selected = false;
 
+let cached_download_string = "error";
+
 
 // render new player data
 function update_player_list(state) {
@@ -80,6 +82,7 @@ socket.on('e_state', async (state) => {
 
         // say everything >:)
         display_post_game_stats(state);
+        cached_download_string = results_as_string(state);
 
         // game ended --> disconnect to prevent getting unwanted updates
         socket.disconnect();
@@ -397,7 +400,7 @@ function display_post_game_stats(state) {
         final_main_pt3.innerHTML = `<i>Vše v pořádku :)</i>`
     }
 
-    el("debug-results").innerText = results_as_string(state);
+    // el("debug-results").innerText = results_as_string(state);
 }
 
 
@@ -434,6 +437,12 @@ ${take_conditional.join("\n")}
 Volitelné předměty: 
 ${take_sometimes.join("\n")}
 `;
+}
+
+function download_results(){
+    let today = new Date().toISOString().slice(0, 10)
+
+    download(cached_download_string, "text/plain", `lekarnickaGame_vysledky_${today}`);
 }
 
 

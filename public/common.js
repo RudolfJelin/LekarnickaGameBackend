@@ -146,7 +146,7 @@ function previous_phase(phase){
 
 function style_article_according_to_declaration(item_decl, item_article) {
 
-    item_article.classList.remove("item-undeclared", "item-right", "item-conditional", "item-optional", "item-wrong");
+    item_article.classList.remove(item_right, item_conditional, item_optional, item_wrong, item_undeclared);
     item_article.classList.add(item_decl);
 
     // switch (item_decl) {
@@ -166,4 +166,14 @@ function style_article_according_to_declaration(item_decl, item_article) {
     //         item_article.classList.add("item-wrong");
     //         break;
     // }
+}
+
+
+function download(content, mimeType, filename){
+    const a = document.createElement('a') // Create "a" element
+    const blob = new Blob([content], {type: mimeType}) // Create a blob (file-like object)
+    const url = URL.createObjectURL(blob) // Create an object URL from blob
+    a.setAttribute('href', url) // Set "a" element link
+    a.setAttribute('download', filename) // Set download filename
+    a.click() // Start downloading
 }
