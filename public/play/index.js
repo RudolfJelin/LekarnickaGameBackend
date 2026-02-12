@@ -323,8 +323,8 @@ function sorting_order(state, item_name){
 }
 
 function filter_items_of_declaration(state, item_decl){
-    console.log(JSON.stringify(state));
-    return state.game_results.filter(item => {return item.declared === item_decl});
+    // console.log(JSON.stringify(state));
+    return state.game_results.filter(item => {return item.declared === item_decl}).map(item => item.item);
 }
 
 
@@ -421,11 +421,18 @@ function results_as_string(state){
     let take_sometimes = filter_items_of_declaration(state, item_optional);
     let take_never = filter_items_of_declaration(state, item_wrong).concat(filter_items_of_declaration(state, item_undeclared));
 
+    console.log("take_always", take_always);
+
     // results string:
     return `
-Co si vzít do lékárničky na jeden den vždycky:
-${"todo lol"}
+Co si vzít do lékárničky na jednodenní výlet vždycky:
+${take_always.join("\n")}
 
+Co je důležité vzít podle situace:
+${take_conditional.join("\n")}
+
+Volitelné předměty: 
+${take_sometimes.join("\n")}
 `;
 }
 
