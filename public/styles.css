@@ -173,3 +173,9 @@ button{
     border-style: solid;
     border-width: 2px;
 }
+
+.lobby-test {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}

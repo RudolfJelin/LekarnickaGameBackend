@@ -57,7 +57,7 @@ function copy(object) {
 function load_first_aid_items(){
 
     // load and split into lines
-    const string = fs.readFileSync('./lekarnicka.txt', 'utf8').split(/\r?\n/)
+    const string = fs.readFileSync('./public/lekarnicky/fit.txt', 'utf8').split(/\r?\n/)
 
     // console.log("string", string);
 

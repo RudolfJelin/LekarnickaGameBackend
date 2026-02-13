@@ -1,0 +1,57 @@
+﻿# spravné řešení
+
+rukavice / latexové rukavice / gumové rukavice
+obinadlo / elastický obvaz
+náplasti
+dezinfekce / Jodisol / Betadine
+Paralen / Panadol / Paracetamol
+Ibalgin / Aspirin
+aktivní uhlí / živočišné uhlí / carbo medicinalis
+hroznový cukr / rychlý cukr
+vazelína / Bepanthen / Panthenol
+pinzeta
+#pinzata na klíšťata
+nůžky
+
+# situační
+Epipen
+izotermická fólie
+teploměr
+
+# optional
+#Omnifilm/Urgofilm na cívce
+antihistaminika / Zyrtec / Zodac / Xyzal
+#zavírací špendlíky
+#Smecta / Imodium / Hylak / Enterol
+#Kinedryl
+#na bolest v krku / Strepfen / Septilen / Strepsils / Tantum Verde / Septolete / Orofar
+sterilní gáza
+#plastová stříkačka
+kapky do očí / Opthalmo-septonex / borová voda / borovka
+
+# NE
+#nůž
+#přeřezávač bezpečnostních pásů
+#hasící přístroj
+#defibrilátor / AED
+škrtidlo / zaškrcovadlo
+#turniket / tourniquet / taktické zaškrcovadlo / CAT
+ponožky
+#Guttalax / Laxygal / glycerinové čípky
+#Novikov / Akutol
+#Hašlerky
+#Jelení lůj
+#kapesníky
+#tlakový obvaz / obvaz č.3
+anticovid / antikovid
+#Hemagel, Flamigel, Betadine mast
+#na bolest kloubů / Ibalgin, Dolgit, Voltaren mast
+#vitamíny
+#rehydratační roztok
+#minerálka / Magnesia
+trojcípý šátek
+respirátor
+#kartáček na zuby
+#poznámkový blok + tužka
+
+
