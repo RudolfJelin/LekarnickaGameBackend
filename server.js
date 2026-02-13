@@ -394,6 +394,13 @@ io.on('connection', (socket) => {
         }
 
         // register selected items
+
+        // check if player exists :)
+        if (state.player_data[socket.id] === undefined) {
+            console.log("Player that doesn't exist sent his data. Creating a temp player...")
+            state.player_data[socket.id] = {"client_type": client_player, "client_name": "Autoplayer"};
+        }
+
         state.player_data[socket.id]['selected_items'] = selected_items;
 
 
