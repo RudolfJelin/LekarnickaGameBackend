@@ -47,6 +47,7 @@ const default_state = {
 
 let state = copy(default_state);
 
+let total_users = 0;
 let state_old = "";
 
 // somehow, it has come to this
@@ -304,17 +305,20 @@ function calculate_post_game_statistics(){
 // connection code
 
 
-
 // this code runs for each socket(host user or player user) separately
 io.on('connection', (socket) => {
-    console.log(`User ${socket.id} connected`);
+    total_users++;
+
+    console.log(`User ${socket.id} connected (${total_users})`);
 
     // send an "e_connected" message to the user that connected
     socket.emit('e_connected', socket.id);
 
     // log a disconnection of the user
     socket.on('disconnect', () => {
-        console.log(`User ${socket.id} disconnected`);
+        total_users--;
+
+        console.log(`User ${socket.id} disconnected (${total_users})`);
 
         delete_player(socket);
     });
