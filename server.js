@@ -391,6 +391,7 @@ io.on('connection', (socket) => {
         if (!(socket.id in state.player_data)){
             // player doesn't exist??
             console.error(`Nonexistent player sent their data? ${socket.id} ${selected_items}`);
+            state.player_data[socket.id] = {"client_type": client_type, "client_name": client_name};
         }
 
         // register selected items

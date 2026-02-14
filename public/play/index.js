@@ -20,6 +20,8 @@ let filter_only_selected = false;
 
 let cached_download_string = "error";
 
+let already_rendered = false;
+
 
 // render new player data
 function update_player_list(state) {
@@ -73,6 +75,18 @@ socket.on('e_connected', async (socket_id) => {
 socket.on('e_state', async (state) => {
     // server is sending me the new state
 
+    // WAIT, if I'm in evaluation phase, I don't need to know any updates right? No?
+    // TODO test: if this doesnt work, limit updates on the server side
+    if (state['phase'] === old_known_phase &&
+        (old_known_phase === game_eval || old_known_phase === game_ingame)){
+        // I dont care
+        return;
+    }
+
+    if (state.phase !== game_ingame){
+        already_rendered = false;
+    }
+
     if (state['phase'] !== old_known_phase) {
         update_phase(state['phase'], old_known_phase);
         old_known_phase = state['phase'];
@@ -92,6 +106,16 @@ socket.on('e_state', async (state) => {
 });
 
 socket.on("e_list_of_items", (items) => {
+
+    console.log("update", already_rendered)
+
+    // DONT nuke if already rendered
+    if (already_rendered === true){
+        return;
+    }
+    else{
+        already_rendered = true;
+    }
 
     // clear list of items
     let article_container = el("article-container");
@@ -146,6 +170,10 @@ socket.on('e_sorry_game_was_cancelled_by_force', async () => {
 
 // a checkbox has been toggled
 function toggleCheckbox(checkbox, i){
+
+    //
+    already_rendered = true;
+
     // handle checkbox checking
     let is_checked = checkbox.checked;
     // console.log(checkbox, i, "clicked, now ", is_checked);
@@ -240,6 +268,13 @@ function filter_shown_items(){
 
 // trigger this when all search parameters should be reset, and the visibility too.
 function resetSearch(){
+
+    // DONT nuke if already rendered
+    if (already_rendered === true){
+        return;
+    }
+
+
     filter_only_selected = false;
     search_query = "";
 
@@ -275,7 +310,7 @@ function update_phase(new_phase, old_phase) {
         // selection logic: extract all selected
         let result = items_data.filter(item => item.selected === true).map(item => {return item.item});
 
-        console.log(JSON.stringify(result), items_data);
+        // console.log(JSON.stringify(result), items_data);
 
         socket.emit("e_selected_items", result);
     }

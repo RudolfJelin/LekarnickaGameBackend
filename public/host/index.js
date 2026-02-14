@@ -7,6 +7,8 @@ const socket = io();
 const client_type = "client_host";
 let old_known_phase = null;
 
+let already_rendered = false;
+
 let items_data = [];
 
 // render new player data
@@ -29,6 +31,18 @@ socket.on('e_connected', async (socket_id) => {
 
 socket.on('e_state', async (state) => {
     // server is sending me the new state
+    let new_phase = state['phase']
+
+    console.log(new_phase, old_known_phase);
+
+    // WAIT, if I'm in evaluation phase, I don't need to know any updates right? No?
+    // TODO test: if this doesnt work, limit updates on the server side
+    if (new_phase === old_known_phase &&
+        (old_known_phase === game_eval)){
+        // I dont care
+        // console.log("i dont care")
+        return;
+    }
 
     if (state['phase'] !== old_known_phase) {
         update_phase(state['phase'], old_known_phase);
@@ -116,6 +130,9 @@ function update_phase(new_phase, old_phase) {
     if (new_phase === game_eval){
         socket.emit('e_update');
     }
+    else{
+        already_rendered = false; // reset this bs
+    }
 
 }
 
@@ -169,6 +186,16 @@ function show_player_response_results(game_results_copy) {
     if (old_known_phase !== game_eval) {
         console.error("Recieved evaluation command, but not in evaluation phase!");
         return;
+    }
+
+    // console.log("update", already_rendered);
+
+    // DONT block if already rendered
+    if (already_rendered === true){
+        return;
+    }
+    else{
+        already_rendered = true;
     }
 
     // show debug text
@@ -240,6 +267,11 @@ function show_player_response_results(game_results_copy) {
 function resetSearch(){
     // TODO: reset all buttons and checkbox panel
 
+
+    // DONT nuke if already rendered
+    if (already_rendered === true){
+        return;
+    }
     // reset checkbox panel (todo)
     // options visible and reset option invisible
 
@@ -282,6 +314,9 @@ function filter_shown_items(){
 
 // a checkbox has been toggled
 function onEvaluationButton(button, i, item_decl){
+
+    already_rendered = true;
+
 
     // save the new information
     items_data[i].item.declared = item_decl;
