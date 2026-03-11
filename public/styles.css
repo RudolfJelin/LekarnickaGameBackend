@@ -185,7 +185,13 @@ button{
     font-style: italic;
 }
 
-.host-game-edit {
+#host-game-edit {
     min-width: 80vh;
     min-height: 20rem;
+}
+
+.border-container {
+    border: 2px solid darkgray;
+    padding: 0.5rem 0.5rem 1rem;
+    margin-block: 0.5rem;
 }

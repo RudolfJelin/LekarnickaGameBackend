@@ -1,0 +1,139 @@
+﻿! Skládáte lékárničku na vícedenní výlet na táboře. Vyberte předměty z táborové lékárny:
+
+# nejdůležitější léky
+
+paracetamol / Paralen / Panadol / Paracetamol
+ibuprofen / Ibalgin / Nurofen / Ibuprofen
+naproxen / Nalgesin
+kyselina acetylsalicylová / Acylpyrin / Aspirin
+
+# masti a gely na bolest svalů a kloubů
+
+mast bolest svalů a kloubů / Voltaren gel / Dolgit / Ibalgin gel / Traumaplant
+
+# alergie
+
+Fenistil gel
+antihistaminika / Fenistil kapky / Zyrtec / Zodac / Xyzal / Analergin / Claritine
+
+# trávení – průjem, zvracení
+
+léky na průjem / aktivní uhlí / živočišné uhlí / carbo medicinalis / Smecta / Hidrasec / Endiaron / Imodium / Enterol / Hylak
+rehydratace a podpora trávení / rehydratační roztok / Kulíšek / ORS / probiotika
+prevence nevolnosti při cestování / Kinedryl / Travelgum
+
+# trávení – zácpa
+
+Guttalax / Laxygal
+glycerinové čípky
+
+# kašel
+
+léky na vlhký kašel / ACC / Mucosolvan / Bromhexin / Ambrobene
+léky na suchý kašel / Stoptussin / Robitussin / Sinecod
+
+# bolest v krku
+
+spreje na bolest v krku / Jox / Stopangin / Tantum Verde
+bonbony na bolest v krku / Strepfen / Septilen / Strepsils / Septolete / Orofar / Vincentka pastilky
+kloktadla na bolest v krku / kloktadlo Tantum Verde / Kutvirt
+
+# rýma
+
+na rýmu / Sanorin / Olynth / Muconasal / Nasivin
+
+# oči
+
+borová voda / borovka
+kapky do očí / Ophthalmo-septonex / Ocuflash / Occusept
+
+# uši
+
+ušní kapky / Otic Solution
+
+# dezinfekce a ošetření ran
+
+voda
+bromová desinfekce / Septonex
+alkoholová desinfekce / Cutasept / Septoderm spray
+peroxid vodíku
+jódová dezinfekce / Betadine / Jodisol
+
+# krytí a hojení ran
+
+Novikov / zelenidlo
+Akutol
+desinfekce mast / Ichtoxyl / Betadine mast
+desinfekce gel / gel na popáleniny / Hemagel / Flamigel
+
+# popáleniny a spáleniny
+
+Bepanthen / Panthenol
+
+
+# další masti a přípravky
+
+Herpesin
+Zovirax
+Infadolan
+Exoderil
+zinková mast
+vazelína
+jelení lůj
+
+léčba oparů / Herpesin / Zovirax
+hojivá mast / Infadolan / zinková mast
+vazelína
+jelení lůj
+mast na plísně / antimykotika / Exoderil
+
+
+# další léky a doplňky
+
+Magnesium / hořčík
+hroznový cukr / glukóza tablety
+vitamíny
+
+# obvazový materiál
+
+sterilní gáza / hydrofilní gáza
+gázové čtverce
+hotový obvaz / (tlakový obvaz)
+obinadlo / elastické obinadlo
+náplasti s polštářkem
+náplast na cívce / Omnifilm / Urgofilm
+umělé stehy / steri-strip náplasti
+mastné krytí / mastný tyl / Inadine
+
+# zastavení krvácení
+
+Gelaspon
+turniket / škrtidlo
+
+# nástroje
+
+pinzeta
+pinzeta na klíšťata
+nůžky
+jehla
+zavírací špendlíky
+teploměr
+
+# ochranné pomůcky
+
+rukavice / latexové rukavice / nitrilové rukavice
+respirátor / rouška
+
+# další zdravotnické věci
+
+trojcípý šátek
+izotermická fólie / termofólie
+pruban / fixační síťka
+antiseptický zásyp
+
+# ostatní užitečné věci
+
+lékařský benzín
+kapesníky
+hygienické vložky / tampony
+baterka / čelovka

@@ -28,17 +28,18 @@
     <br>
     <br>
 
-    <p id="yapping-2"><i>Pokročilá funkcionalita</i></p>
-    <button id="edit-game-b" onclick="toggleEditGame()" >Uprav si svojí hru</button>
-    <div id="edit-game" style="display: none">
-        <p><i>Nezapomeň si uložit změny.</i></p>
-        <button onclick="updateEditGame()">Uložit</button>
-        <button onclick="resetEditGame()">Obnovit výchozí hru</button>
-        <br>
-        <label for="host-game-edit">Hra:</label><br>
-        <textarea id="host-game-edit" placeholder="..." rows="30" cols="100"></textarea>
+    <div class="border-container">
+        <p id="yapping-2"><i>Pokročilá funkcionalita</i></p>
+        <button id="edit-game-b" onclick="toggleEditGame()" >Uprav si svojí hru</button>
+        <div id="edit-game" style="display: none">
+            <p><i>Nezapomeň si uložit změny.</i></p>
+            <button onclick="updateEditGame()">Uložit</button>
+            <button onclick="resetEditGame()">Obnovit výchozí hru</button>
+            <br>
+            <label for="host-game-edit">Hra:</label><br>
+            <textarea id="host-game-edit" placeholder="..." rows="30" cols="100"></textarea>
+        </div>
     </div>
-
 </div>
 
 <div id="game_in_lobby" style="display: none">
@@ -171,9 +172,9 @@
 
     <ul>
         <li id="correct_score"></li>
-        <li id="conditional_score"></li>
+        <li id="conditional_score" style="display: none"></li>
 <!--        <li id="optional_score"></li>-->
-        <li id="wrong_score"></li>
+        <li id="wrong_score" style="display: none"></li>
     </ul>
 
 

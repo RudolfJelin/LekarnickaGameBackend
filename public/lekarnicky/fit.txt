@@ -1,4 +1,4 @@
-﻿! Skládáte lékárničku na jednodenní výlet do lesa
+﻿! Skládáte lékárničku na jednodenní výlet do lesa //
 
 # spravné řešení
 

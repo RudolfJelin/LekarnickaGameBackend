@@ -508,6 +508,9 @@ function results_as_string(state){
 
     console.log("take_always", take_always);
 
+    take_always = take_always.map(s => {return ` ${s}`});
+    take_never = take_never.map(s => {return ` ${s}`});
+
     // results string:
     return `
 Výsledky hry "${state.zadani}":   
@@ -517,7 +520,7 @@ ${take_always.join("\n")}
 
 Volitelné předměty: 
 ${take_never.join("\n")}
-...
+ (a další co nebyly ve hře...)
 `;
 }
 

@@ -1,6 +1,31 @@
-﻿# test
-
-obvaz
+﻿# nejdůležitější předměty
+rukavice / latexové rukavice / gumové rukavice
+obinadlo / elastický obvaz
+náplasti
+dezinfekce / Jodisol / Betadine
+Paralen / Panadol / Paracetamol
+Ibalgin
+aktivní uhlí / živočišné uhlí / carbo medicinalis
+hroznový cukr / rychlý cukr
+vazelína / Bepanthen / Panthenol
+pinzeta
 nůžky
-lepidlo
-rukavice
+
+# méně důležité
+Epipen
+izotermická fólie
+teploměr
+Omnifilm/Urgofilm na cívce
+antihistaminika / Zyrtec / Zodac / Xyzal
+zavírací špendlíky
+Smecta / Imodium / Hylak / Enterol
+Kinedryl
+na bolest v krku / Strepfen / Septilen / Strepsils / Tantum Verde / Septolete / Orofar
+sterilní gáza
+kapky do očí / Opthalmo-septonex / borová voda / borovka
+
+# ostatní
+trojcípý šátek
+respirátor
+
+

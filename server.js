@@ -34,7 +34,7 @@ const default_game_len_seconds = 10;
 // each item has one main name and can have several "/"-delimited variations in the name
 // const items = ["obvaz", "ibuprofen", "nůžky", "aktivní uhlí/živočišné uhlí"]
 // const items = load_first_aid_items(); // TODO verify
-const default_game_file = "./public/lekarnicky/fit.txt";
+const default_game_file = "./public/lekarnicky/taborova.txt";
 
 const default_state = {
     "phase": game_none,
@@ -60,6 +60,7 @@ function copy(object) {
 }
 
 function load_file_as_string(filename) {
+    console.log("loading file: ", filename);
     return fs.readFileSync(filename, 'utf8');
 }
 
@@ -107,7 +108,7 @@ function process_zadani_list(string){
 function load_first_aid_items(){
 
     // load and split into lines
-    const lst = load_file_as_string('./public/lekarnicky/fit.txt');
+    const lst = load_file_as_string(default_game_file);
     return process_zadani_list(lst);
 }
 

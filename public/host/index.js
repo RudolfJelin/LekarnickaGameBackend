@@ -74,10 +74,10 @@ socket.on('e_state', async (state) => {
 
 
 
-        el("correct_score").innerText = `${stats.correct_score}% správných předmětů označeno;`;
+        el("correct_score").innerText = `${stats.correct_score}% správných předmětů označeno.`;
         // el("conditional_score").innerText = `${stats.conditional_score}% předmětů, kde záleží na okolnostech;`;
         // el("optional_score").innerText = `Volitelné předměty označny: ${stats.optional_score}%`; // nás nezajímá, duh
-        el("wrong_score").innerText = `-${stats.wrong_score}% za nesprávné předměty.`;
+        // el("wrong_score").innerText = `-${stats.wrong_score}% za nesprávné předměty.`;
 
         el("postgame_host_p_2").innerText = `Vaše skóre: ${Math.floor(stats.final_score)}/100`;
 
@@ -350,7 +350,7 @@ function toggleEditGame(){
     if (edit_game_toggled){
         // turned on NOW --> reset to default
         el("edit-game").style.display = "block";
-        // resetEditGame(); <-- dont hide
+        resetEditGame();
     }
     else{
         // HIDDEN now
