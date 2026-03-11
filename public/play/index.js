@@ -437,14 +437,13 @@ function display_post_game_stats(state) {
             // spawn an element
             final_main_pt1.innerHTML += article;
             added_anything_to_1 = true;
-            console.log("added to 1", article);
         }
         else if ((declared_as === item_right && !was_selected)
             || (declared_as === item_conditional && !was_selected)){
             final_main_pt2.innerHTML += article;
             added_anything_to_2 = true;
         }
-        else if ((declared_as === item_wrong && was_selected)){
+        else if (((declared_as === item_wrong || declared_as === item_undeclared))){
             final_main_pt3.innerHTML += article;
             added_anything_to_3 = true;
         }
@@ -453,17 +452,17 @@ function display_post_game_stats(state) {
 
     if (!added_anything_to_1){
         // 1 is empty
-        final_main_pt1.innerHTML = `<i>Nic :'(</i>`
+        final_main_pt1.innerHTML = `<i>Nic :(</i>`
     }
 
     if (!added_anything_to_2){
         // 2 is empty
-        final_main_pt2.innerHTML = `<i>Nic :)</i>`
+        final_main_pt2.innerHTML = `<i>Všechno důležité jsi už vybral(a) :)</i>`
     }
 
     if (!added_anything_to_3){
         // 3 is empty
-        final_main_pt3.innerHTML = `<i>Vše v pořádku :)</i>`
+        final_main_pt3.innerHTML = `<i>.</i>`
     }
 
     // el("debug-results").innerText = results_as_string(state);
@@ -494,14 +493,13 @@ function results_as_string(state){
 
     // results string:
     return `
-Co si vzít do lékárničky na jednodenní výlet vždycky:
+Obsah lékárničky na jednodenní výlet.    
+    
+Co si vzít vždycky:
 ${take_always.join("\n")}
 
-Co je důležité vzít podle situace:
-${take_conditional.join("\n")}
-
 Volitelné předměty: 
-${take_sometimes.join("\n")}
+${take_never.join("\n")}
 `;
 }
 
