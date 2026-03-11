@@ -58,14 +58,14 @@ h1 {
 }
 
 .player-input-search {
-    min-width: 50vw;
+    min-width: 100%;
     min-height: 2rem;
 }
 
 .player-input-div {
 
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 10fr 1fr;
 }
 
 .player-search-row-div {
@@ -178,4 +178,9 @@ button{
 
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+
+.second-text-part {
+    color: #4e4e4e;
+    font-style: italic;
 }

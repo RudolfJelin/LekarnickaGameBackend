@@ -41,6 +41,26 @@ function on_name_selected(socket_id, my_name) {
     socket.emit('e_first_update', client_type, my_name);
 }
 
+function first_part(string){
+    let idx =  string.indexOf("/");
+
+    if (idx === -1){
+        return string;
+    }
+
+    return string.slice(0, idx);
+}
+
+function second_part(string){
+    let idx =  string.indexOf("/");
+
+    if (idx === -1){
+        return "";
+    }
+
+    return string.slice(idx);
+}
+
 // successfully connected
 socket.on('e_connected', async (socket_id) => {
     //  connection happened, server sent an "e_connected" event with no payload
@@ -126,10 +146,14 @@ socket.on("e_list_of_items", (items) => {
     let i = 0;
     items.forEach((item) => {
 
+        // find first and second part of item, delimited by "/"
+        let fp = first_part(item);
+        let sp = second_part(item);
+
         // spawn an element
         let article = `
             <article class="player-article" id="generated-article-${i}">
-                <label for="generated-toggle-${i}" class="generated-toggle-label"><p>${item}</p></label>
+                <label for="generated-toggle-${i}" class="generated-toggle-label"><p>${fp} <span class="second-text-part">${sp}</span></p></label>
                 <input type="checkbox" class="player-article-toggle" id="generated-toggle-${i}" onchange="toggleCheckbox(this, ${i})" >
             </article>
         `
@@ -386,7 +410,7 @@ function display_post_game_stats(state) {
 
     // sort items in useful order
     state.game_results.sort((a, b) => {
-        return sorting_order(state, a.item) - sorting_order(state, b.item);
+        return sorting_order(state, b.item) - sorting_order(state, a.item);
     });
 
     let added_anything_to_1 = false;

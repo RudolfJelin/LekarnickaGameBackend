@@ -224,13 +224,13 @@ function show_player_response_results(game_results_copy) {
                 <div>
                     <div id="generated-options-${i}" class="div-options-buttons">
                         <button id="generated-button-correct-${i}" onclick="onEvaluationButton(this, ${i}, item_right)">Nutný obsah ✅️️</button>
-                        <button id="generated-button-situational-${i}" onclick="onEvaluationButton(this, ${i}, item_conditional)">Podle situace 🧐</button>
+                        <!--<button id="generated-button-situational-${i}" onclick="onEvaluationButton(this, ${i}, item_conditional)">Podle situace 🧐</button>
                         <button id="generated-button-optional-${i}" onclick="onEvaluationButton(this, ${i}, item_optional)">Zvažte nebrat ⚖️</button>
-                        <button id="generated-button-wrong-${i}" onclick="onEvaluationButton(this, ${i}, item_wrong)">Ne ❌️</button>
-                    </div>
+                        <button id="generated-button-wrong-${i}" onclick="onEvaluationButton(this, ${i}, item_wrong)">Ne ❌️</button>-->
+                    <!--</div>
+                    <div id="generated-deselect-div-${i}" class="div-deselect-button">-->
                     
-                    <div id="generated-deselect-div-${i}" class="div-deselect-button">
-                        <button id="generated-button-deselect-${i}" onclick="onEvaluationButton(this, ${i}, item_undeclared)">Zrušit označení</button>
+                        <button id="generated-button-deselect-${i}" onclick="onEvaluationButton(this, ${i}, item_undeclared)">Volitelný obsah</button>
                     </div>
                 </div>
             </article>
