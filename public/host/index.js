@@ -8,6 +8,7 @@ const client_type = "client_host";
 let old_known_phase = null;
 
 let already_rendered = false;
+let cachedGameString = "Načítá se..."
 
 let items_data = [];
 
@@ -56,6 +57,10 @@ socket.on('e_state', async (state) => {
     el("start_game_b").disabled = count_players(state) === 0;
     el("start_game_b").innerText = count_players(state) === 0 ? "Pro spuštění musí být aspoň 1 hráč" : "Začít hru";
 
+    // update the game string
+    cachedGameString = state.game_string;
+    el("game_host_p").innerHTML = `<b>Zadání: ${state.zadani}</b>`
+
     // double check if need to show post-game/pre-eval stats
     if (state.phase === game_eval && state.game_results_calculated){
         show_player_response_results(state.game_results)
@@ -70,9 +75,9 @@ socket.on('e_state', async (state) => {
 
 
         el("correct_score").innerText = `${stats.correct_score}% správných předmětů označeno;`;
-        el("conditional_score").innerText = `${stats.conditional_score}% předmětů, kde záleží na okolnostech;`;
+        // el("conditional_score").innerText = `${stats.conditional_score}% předmětů, kde záleží na okolnostech;`;
         // el("optional_score").innerText = `Volitelné předměty označny: ${stats.optional_score}%`; // nás nezajímá, duh
-        el("wrong_score").innerText = `ale ${stats.wrong_score}% nesprávných předmětů.`;
+        el("wrong_score").innerText = `-${stats.wrong_score}% za nesprávné předměty.`;
 
         el("postgame_host_p_2").innerText = `Vaše skóre: ${Math.floor(stats.final_score)}/100`;
 
@@ -336,7 +341,34 @@ function onEvaluationButton(button, i, item_decl){
     filter_shown_items();
 }
 
+let edit_game_toggled = false;
+function toggleEditGame(){
+    edit_game_toggled = !edit_game_toggled;
+    el("edit-game").style.display = edit_game_toggled ? "block" : "none";
 
+
+    if (edit_game_toggled){
+        // turned on NOW --> reset to default
+        el("edit-game").style.display = "block";
+        // resetEditGame(); <-- dont hide
+    }
+    else{
+        // HIDDEN now
+        el("edit-game").style.display = "none";
+        // updateEditGame(); <-- dont save results
+    }
+
+}
+
+function updateEditGame(){
+    let newGame = el("host-game-edit").value;
+    socket.emit("e_host_new_game_string", newGame);
+}
+
+function resetEditGame(){
+    // reset to what came from state
+    el("host-game-edit").value = cachedGameString;
+}
 
 
 

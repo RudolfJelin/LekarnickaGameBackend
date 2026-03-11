@@ -1,4 +1,6 @@
-﻿# spravné řešení
+﻿! Skládáte lékárničku na jednodenní výlet do lesa
+
+# spravné řešení
 
 rukavice / latexové rukavice / gumové rukavice
 obinadlo / elastický obvaz

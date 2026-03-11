@@ -33,7 +33,8 @@ const default_game_len_seconds = 10;
 
 // each item has one main name and can have several "/"-delimited variations in the name
 // const items = ["obvaz", "ibuprofen", "nůžky", "aktivní uhlí/živočišné uhlí"]
-const items = load_first_aid_items(); // TODO verify
+// const items = load_first_aid_items(); // TODO verify
+const default_game_file = "./public/lekarnicky/fit.txt";
 
 const default_state = {
     "phase": game_none,
@@ -42,7 +43,10 @@ const default_state = {
     "player_data": {}, // actual player data
     "game_results_calculated": false,
     "game_results": [], // for each item: name, %, right/conditional/optional/wrong/undeclared
-    "stats": {}
+    "stats": {},
+    "game_string": load_file_as_string(default_game_file),
+    "predmety": load_first_aid_items()[1],
+    "zadani": load_first_aid_items()[0]
 }
 
 let state = copy(default_state);
@@ -55,15 +59,19 @@ function copy(object) {
     return JSON.parse(JSON.stringify(object));
 }
 
-function load_first_aid_items(){
+function load_file_as_string(filename) {
+    return fs.readFileSync(filename, 'utf8');
+}
 
-    // load and split into lines
-    const string = fs.readFileSync('./public/lekarnicky/fit.txt', 'utf8').split(/\r?\n/)
-
+function process_zadani_list(string){
     // console.log("string", string);
 
+    let lst = string.split(/\r?\n/);
+
+    let zadani = "Nespecifikováno.";
+
     // filter out comments and empty lines
-    let result = string.filter(line => {
+    let result = lst.filter(line => {
         // console.log(line, line[0])
         if (line === undefined || line.length === 0){
             return false;
@@ -75,6 +83,12 @@ function load_first_aid_items(){
             return false;
         }
 
+        if (line[0] === "!"){
+            zadani = line.slice(2);
+            return false;
+        }
+
+        // noinspection RedundantIfStatementJS
         if (line.trim().length <= 1){
             return false;
         }
@@ -87,7 +101,14 @@ function load_first_aid_items(){
 
     shuffleArray(result);
 
-    return result;
+    return [zadani, result];
+}
+
+function load_first_aid_items(){
+
+    // load and split into lines
+    const lst = load_file_as_string('./public/lekarnicky/fit.txt');
+    return process_zadani_list(lst);
 }
 
 // https://stackoverflow.com/a/12646864
@@ -186,7 +207,7 @@ function onAllPlayersSubmittedSelections() {
     state.game_results = [];
 
     // do the calculations
-    items.forEach((item) => {
+    state.predmety.forEach((item) => {
         // for each item, calculate its %
         let count = player_ids.filter(id => {
             return state.player_data[id].selected_items.includes(item);
@@ -269,7 +290,7 @@ function calculate_post_game_statistics(){
     if (wrong_undeclared_count){stats.wrong_score = 0;}
 
     // overall score (optional has zero weight, cond has half weight)
-    stats.final_score = (stats.correct_score + stats.conditional_score / 2 + (100 - stats.wrong_score)) / 2.5;
+    stats.final_score = (stats.correct_score  - stats.wrong_score);
 
     state.stats = stats;
 
@@ -384,18 +405,18 @@ io.on('connection', (socket) => {
     });
 
     socket.on("e_requested_item_list", ()=>{
-        io.emit("e_list_of_items", items); // raw items
+        io.emit("e_list_of_items", state.predmety); // raw items
     });
 
     socket.on("e_selected_items", (selected_items) => {
 
-        // console.log("selected items", JSON.stringify(selected_items));
+        console.log(`selected items of ${socket.id}: `, JSON.stringify(selected_items));
 
         // check if player exists
         if (!(socket.id in state.player_data)){
             // player doesn't exist??
             console.error(`Nonexistent player sent their data? ${socket.id} ${selected_items}`);
-            state.player_data[socket.id] = {"client_type": client_type, "client_name": client_name};
+            state.player_data[socket.id] = {"client_type": client_player, "client_name": "Unknown player"};
         }
 
         // register selected items
@@ -446,6 +467,19 @@ io.on('connection', (socket) => {
         update_state_for_all();
 
 
+    });
+
+    // new game string from host
+    socket.on("e_host_new_game_string", (game_string)=>{
+
+        state.game_string = game_string;
+
+        // parse it
+        let [zadani, predmety] = process_zadani_list(state.game_string);
+        state.zadani = zadani;
+        state.predmety = predmety;
+
+        console.log(`new state: ${state.zadani}; ${state.predmety}`)
     });
 });
 

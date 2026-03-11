@@ -184,3 +184,8 @@ button{
     color: #4e4e4e;
     font-style: italic;
 }
+
+.host-game-edit {
+    min-width: 80vh;
+    min-height: 20rem;
+}

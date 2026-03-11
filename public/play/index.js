@@ -19,6 +19,7 @@ let search_query = "";
 let filter_only_selected = false;
 
 let cached_download_string = "error";
+let predmety_cached = [];
 
 let already_rendered = false;
 
@@ -107,6 +108,9 @@ socket.on('e_state', async (state) => {
         already_rendered = false;
     }
 
+    // cache predmety
+    predmety_cached = state.predmety;
+
     if (state['phase'] !== old_known_phase) {
         update_phase(state['phase'], old_known_phase);
         old_known_phase = state['phase'];
@@ -123,17 +127,17 @@ socket.on('e_state', async (state) => {
     }
 
     update_player_list(state);
+
+    el("game_zadani_p").innerText = `Zadání: ${state.zadani}`;
 });
 
-socket.on("e_list_of_items", (items) => {
-
+function update_item_list(items) {
     console.log("update", already_rendered)
 
     // DONT nuke if already rendered
-    if (already_rendered === true){
+    if (already_rendered === true) {
         return;
-    }
-    else{
+    } else {
         already_rendered = true;
     }
 
@@ -164,7 +168,7 @@ socket.on("e_list_of_items", (items) => {
         items_data.push({
             "id": i,
             "item": item,
-            "article_id":`generated-article-${i}`,
+            "article_id": `generated-article-${i}`,
             "checkbox_id": `generated-toggle-${i}`,
             "p": `generated-p-${i}`,
             "selected": false
@@ -174,8 +178,13 @@ socket.on("e_list_of_items", (items) => {
     });
 
     // trigger a cleanup (BIG one, just to be EXTRA sure)
-    resetSearch();
-});
+    // resetSearch(true);
+    filter_shown_items();
+}
+
+// socket.on("e_list_of_items", (items) => {
+//     update_item_list(items);
+// });
 
 
 socket.on('e_sorry_game_was_cancelled_by_force', async () => {
@@ -252,6 +261,8 @@ function matches_search_query(item_name, query){
 // trigger this when some input parameter changed
 function filter_shown_items(){
 
+    console.log("filtering items")
+
     let total = 0;
     let total_visible = 0;
     let total_selected = 0;
@@ -291,11 +302,13 @@ function filter_shown_items(){
 }
 
 // trigger this when all search parameters should be reset, and the visibility too.
-function resetSearch(){
+function resetSearch(force = false){
 
     // DONT nuke if already rendered
     if (already_rendered === true){
-        return;
+        if (!force){
+            return;
+        }
     }
 
 
@@ -334,14 +347,18 @@ function update_phase(new_phase, old_phase) {
         // selection logic: extract all selected
         let result = items_data.filter(item => item.selected === true).map(item => {return item.item});
 
+        console.log("selected items data: ", items_data)
+
         // console.log(JSON.stringify(result), items_data);
 
         socket.emit("e_selected_items", result);
     }
 
     else if (new_phase === game_ingame){
+
+        update_item_list(predmety_cached);
         resetSearch(); // trigger a cleanup possibly
-        socket.emit("e_requested_item_list");
+        // socket.emit("e_requested_item_list");
     }
 }
 
@@ -493,13 +510,14 @@ function results_as_string(state){
 
     // results string:
     return `
-Obsah lékárničky na jednodenní výlet.    
+Výsledky hry "${state.zadani}":   
     
 Co si vzít vždycky:
 ${take_always.join("\n")}
 
 Volitelné předměty: 
 ${take_never.join("\n")}
+...
 `;
 }
 

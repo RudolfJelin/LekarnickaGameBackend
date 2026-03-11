@@ -22,9 +22,22 @@
 <div id="game_none" style="display: none">
 
     <p id="yapping">Jako vedoucí můžeš vytvořit novou hru. Tuto obrazovku sdílej na projektoru.</p>
-    <p id="yapping-2"><i>V budoucnu tu bude možnost upravit si seznam předmětů a možná i zadání podle libosti.</i></p>
 <!--    button -->
     <button id="new_game_b" onclick="newGameAsHost()" >Nová veřejná hra</button>
+
+    <br>
+    <br>
+
+    <p id="yapping-2"><i>Pokročilá funkcionalita</i></p>
+    <button id="edit-game-b" onclick="toggleEditGame()" >Uprav si svojí hru</button>
+    <div id="edit-game" style="display: none">
+        <p><i>Nezapomeň si uložit změny.</i></p>
+        <button onclick="updateEditGame()">Uložit</button>
+        <button onclick="resetEditGame()">Obnovit výchozí hru</button>
+        <br>
+        <label for="host-game-edit">Hra:</label><br>
+        <textarea id="host-game-edit" placeholder="..." rows="30" cols="100"></textarea>
+    </div>
 
 </div>
 
@@ -32,7 +45,7 @@
 
     <main class="lobby-test">
         <div>
-            <p id="yapping-4">Sestavte týmy velikosti 1-4 osoby.</p>
+            <p id="yapping-4">Sestavte týmy velikosti 1-3 osoby.</p>
 
             <p id="lobby_host_p_2">Hráčů připojeno: načítám...</p>
             <ol id="player_list_host">
@@ -56,7 +69,7 @@
 
 <div id="game_ingame" style="display: none">
 
-    <p id="game_host_p"><b>Zadání: skládáte lékárničku na jednodenní výlet</b></p>
+    <p id="game_host_p"><b>Zadání: načítám...</b></p>
     <p id="game_host_p-2">Vyberte na svém zařízení všechny položky, které byste si dali do lékárničky.</p>
     <p><i>Pozor! Mobil nepřepínejte do jiné obrazovky, spojení se tím přeruší.</i></p>
 
@@ -142,7 +155,7 @@
 
 
 
-    <p id="asfiojsdio">Nevyhodnocené předměty jsou považovány za chybné.</p>
+    <p id="asfiojsdio">Nevyhodnocené předměty jsou považovány za volitelné.</p>
 
     <hr>
     <p id="yapping-6">Ukončením hry se přepošlou výsledky všem hráčům.</p>
