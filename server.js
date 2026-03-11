@@ -214,11 +214,12 @@ function onAllPlayersSubmittedSelections() {
             return state.player_data[id].selected_items.includes(item);
         }).length;
 
+        let percent = round_2(count * 100.0 / num_players);
 
         // ...[for each item: name, %, right/conditional/optional/wrong/undeclared]
         state.game_results.push({
             "item": item,
-            "percent": (count * 100.0 / num_players),
+            "percent": percent,
             "declared": item_undeclared
         });
     })
@@ -290,8 +291,13 @@ function calculate_post_game_statistics(){
     if (optional_count === 0){stats.optional_score = 100;}
     if (wrong_undeclared_count){stats.wrong_score = 0;}
 
+    stats.correct_score = round_2(stats.correct_score);
+    stats.conditional_score = round_2(stats.conditional_score);
+    stats.optional_score = round_2(stats.optional_score);
+    stats.wrong_score = round_2(stats.wrong_score);
+
     // overall score (optional has zero weight, cond has half weight)
-    stats.final_score = (stats.correct_score  - stats.wrong_score);
+    stats.final_score = round_2(stats.correct_score - stats.wrong_score);
 
     state.stats = stats;
 
@@ -320,7 +326,10 @@ function calculate_post_game_statistics(){
 
 }
 
-
+// only 2 decimal
+function round_2(num){
+    return Math.round(num * 100) / 100;
+}
 
 
 

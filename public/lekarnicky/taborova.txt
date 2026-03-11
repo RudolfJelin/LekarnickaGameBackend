@@ -68,18 +68,10 @@ desinfekce gel / gel na popáleniny / Hemagel / Flamigel
 
 # popáleniny a spáleniny
 
-Bepanthen / Panthenol
+mast na popáleniny / Bepanthen / Panthenol
 
 
 # další masti a přípravky
-
-Herpesin
-Zovirax
-Infadolan
-Exoderil
-zinková mast
-vazelína
-jelení lůj
 
 léčba oparů / Herpesin / Zovirax
 hojivá mast / Infadolan / zinková mast
@@ -137,3 +129,8 @@ lékařský benzín
 kapesníky
 hygienické vložky / tampony
 baterka / čelovka
+
+# na předpis
+
+epipen
+ventolin
