@@ -254,11 +254,14 @@ function calculate_post_game_statistics(){
     let stats = {};
     let item_count = state.game_results.length;
 
+    let player_count = count_players();
+
     // count how many items of each category
     let right_count = state.game_results.filter(item => (item.declared === item_right)).length;
     let conditional_count = state.game_results.filter(item => (item.declared === item_conditional)).length;
     let optional_count = state.game_results.filter(item => (item.declared === item_optional)).length;
     let wrong_undeclared_count = state.game_results.filter(item => (item.declared === item_undeclared || item.declared === item_wrong)).length;
+    let other_count = state.game_results.filter(item => (item.declared !== item_right)).length;
 
 
     // how many % on average across these items
@@ -266,22 +269,34 @@ function calculate_post_game_statistics(){
     stats.conditional_score = 0;
     stats.optional_score = 0;
     stats.wrong_score = 0;
+    stats.other_score = 0;
+
+    // average number of correct answers
+    stats.total_right = 0;
+    stats.total_other = 0;
 
     state.game_results.forEach(item => {
         switch (item.declared) {
             case item_right:
+                stats.total_right ++;
                 stats.correct_score += item.percent / right_count;
                 break;
-            case item_conditional:
-                stats.conditional_score += item.percent / conditional_count;
-                break;
-            case item_optional:
-                stats.optional_score += item.percent / optional_count;
-                break;
-            case item_wrong:
-            case item_undeclared:
-                stats.wrong_score += item.percent / wrong_undeclared_count;
-                break;
+            // case item_conditional:
+            //     stats.total_other ++;
+            //     stats.conditional_score += item.percent / conditional_count;
+            //     break;
+            // case item_optional:
+            //     stats.total_other ++;
+            //     stats.optional_score += item.percent / optional_count;
+            //     break;
+            // case item_wrong:
+            // case item_undeclared:
+            //     stats.total_other ++;
+            //     stats.wrong_score += item.percent / wrong_undeclared_count;
+            //     break;
+            default:
+                stats.total_other ++;
+                stats.other_score += item.percent / other_count;
         }
     });
 
@@ -295,6 +310,7 @@ function calculate_post_game_statistics(){
     stats.conditional_score = round_2(stats.conditional_score);
     stats.optional_score = round_2(stats.optional_score);
     stats.wrong_score = round_2(stats.wrong_score);
+    stats.other_score = round_2(stats.other_score);
 
     // overall score (optional has zero weight, cond has half weight)
     stats.final_score = round_2(stats.correct_score - stats.wrong_score);

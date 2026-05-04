@@ -72,14 +72,20 @@ socket.on('e_state', async (state) => {
         let stats = state.stats;
         // let stats_ul = el("postgame_host_ul");
 
+        // let other_score = stats.wrong_score;
+        let avg_predmetu = round_2(stats.correct_score / 100 * stats.total_right);
+        let avg_other = round_2(stats.other_score / 100 * stats.total_other);
 
 
-        el("correct_score").innerText = `${stats.correct_score}% správných předmětů označeno.`;
+        el("correct_score").innerText = `vybrali jste v průměru ${avg_predmetu} z ${stats.total_right} (${stats.correct_score}%) správných předmětů.`;
+        el("optional_score").innerText = `vybrali jste v průměru ${avg_other} z ${stats.total_other} (${stats.other_score}%) volitelných předmětů.`;
+
+
         // el("conditional_score").innerText = `${stats.conditional_score}% předmětů, kde záleží na okolnostech;`;
         // el("optional_score").innerText = `Volitelné předměty označny: ${stats.optional_score}%`; // nás nezajímá, duh
         // el("wrong_score").innerText = `-${stats.wrong_score}% za nesprávné předměty.`;
 
-        el("postgame_host_p_2").innerText = `Vaše skóre: ${Math.floor(stats.final_score)}/100`;
+        el("postgame_host_p_3").innerText = `Vaše skóre: ${Math.floor(stats.final_score)}/100`;
 
     }
 });

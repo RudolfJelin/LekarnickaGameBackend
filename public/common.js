@@ -177,3 +177,10 @@ function download(content, mimeType, filename){
     a.setAttribute('download', filename) // Set download filename
     a.click() // Start downloading
 }
+
+
+// only 2 decimal
+function round_2(num){
+    return Math.round(num * 100) / 100;
+}
+

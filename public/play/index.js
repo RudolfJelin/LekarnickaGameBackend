@@ -297,7 +297,7 @@ function filter_shown_items(){
     let status_text = `Zobrazeno ${total_visible} z ${total} položek celkem,\n`
      + `(${total_selected_and_visible} z ${total_selected} vybraných položek)`;
 
-    el("player-status-bar").innerText = status_text;
+    // el("player-status-bar").innerText = status_text;
 
 }
 

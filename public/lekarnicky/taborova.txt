@@ -1,11 +1,11 @@
-﻿! Skládáte lékárničku na vícedenní výlet na táboře. Vyberte předměty z táborové lékárny:
+﻿! Skládáte lékárničku na vícedenní výlet na táboře. Výletu se účastní 20 dětí (8-15 let) a 4 dospělí. Vyberte předměty z táborové lékárny:
 
 # nejdůležitější léky
 
-paracetamol / Paralen / Panadol / Paracetamol
-ibuprofen / Ibalgin / Nurofen / Ibuprofen
-naproxen / Nalgesin
-kyselina acetylsalicylová / Acylpyrin / Aspirin
+na horečku a bolest / paracetamol / Paralen / Panadol / Paracetamol
+na horečku a bolest, protizánětlivý / ibuprofen / Ibalgin / Nurofen / Ibuprofen (nevhodné pro děti)
+#naproxen / Nalgesin
+na horečku a bolest, protizánětlivý / Aspirin / kyselina acetylsalicylová / Acylpyrin (nevhodné pro děti)
 
 # masti a gely na bolest svalů a kloubů
 
@@ -13,19 +13,20 @@ mast bolest svalů a kloubů / Voltaren gel / Dolgit / Ibalgin gel / Traumaplant
 
 # alergie
 
-Fenistil gel
-antihistaminika / Fenistil kapky / Zyrtec / Zodac / Xyzal / Analergin / Claritine
+mast na alergie / Fenistil gel
+prášky na alergie / Fenistil kapky / Zyrtec / Zodac / Xyzal / Analergin / Claritine
 
 # trávení – průjem, zvracení
 
-léky na průjem / aktivní uhlí / živočišné uhlí / carbo medicinalis / Smecta / Hidrasec / Endiaron / Imodium / Enterol / Hylak
-rehydratace a podpora trávení / rehydratační roztok / Kulíšek / ORS / probiotika
-prevence nevolnosti při cestování / Kinedryl / Travelgum
+léky na průjem / aktivní uhlí / živočišné uhlí / carbo medicinalis / Smecta / Hidrasec / Endiaron / Imodium
+probiotika (podpora po průjmu) / Enterol / Hylak
+#rehydratační roztok / ORS
+na nevolnost při cestování / Kinedryl / Travelgum
 
 # trávení – zácpa
 
-Guttalax / Laxygal
-glycerinové čípky
+na zácpu / Guttalax / Laxygal
+#glycerinové čípky
 
 # kašel
 
@@ -36,7 +37,7 @@ léky na suchý kašel / Stoptussin / Robitussin / Sinecod
 
 spreje na bolest v krku / Jox / Stopangin / Tantum Verde
 bonbony na bolest v krku / Strepfen / Septilen / Strepsils / Septolete / Orofar / Vincentka pastilky
-kloktadla na bolest v krku / kloktadlo Tantum Verde / Kutvirt
+#kloktadla na bolest v krku / kloktadlo Tantum Verde / Kutvirt
 
 # rýma
 
@@ -53,16 +54,16 @@ ušní kapky / Otic Solution
 
 # dezinfekce a ošetření ran
 
-voda
+#voda
 bromová desinfekce / Septonex
 alkoholová desinfekce / Cutasept / Septoderm spray
-peroxid vodíku
-jódová dezinfekce / Betadine / Jodisol
+#peroxid vodíku
+jódová dezinfekce / Betadine / Jodisol (alergen: Jód)
 
 # krytí a hojení ran
 
-Novikov / zelenidlo
-Akutol
+#Novikov / zelenidlo
+#Akutol
 desinfekce mast / Ichtoxyl / Betadine mast
 desinfekce gel / gel na popáleniny / Hemagel / Flamigel
 
@@ -82,8 +83,8 @@ mast na plísně / antimykotika / Exoderil
 
 # další léky a doplňky
 
-Magnesium / hořčík
-hroznový cukr / glukóza tablety
+#Magnesium / hořčík
+hroznový cukr / glukóza
 vitamíny
 
 # obvazový materiál
@@ -95,12 +96,12 @@ obinadlo / elastické obinadlo
 náplasti s polštářkem
 náplast na cívce / Omnifilm / Urgofilm
 umělé stehy / steri-strip náplasti
-mastné krytí / mastný tyl / Inadine
+#mastné krytí / mastný tyl / Inadine
 
 # zastavení krvácení
 
-Gelaspon
-turniket / škrtidlo
+#Gelaspon
+na masivní krvácení / turniket / škrtidlo
 
 # nástroje
 
@@ -120,17 +121,20 @@ respirátor / rouška
 
 trojcípý šátek
 izotermická fólie / termofólie
-pruban / fixační síťka
-antiseptický zásyp
+#pruban / fixační síťka
+#antiseptický zásyp
 
 # ostatní užitečné věci
 
-lékařský benzín
-kapesníky
+#lékařský benzín
+#kapesníky
 hygienické vložky / tampony
-baterka / čelovka
+
+# chyták
+#baterka / čelovka
+
 
 # na předpis
 
-epipen
-ventolin
+na těžkou alergickou reakci / epipen / adrenalinové pero
+na astmatický záchvat / ventolin
